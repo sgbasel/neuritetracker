@@ -4,7 +4,7 @@
 ## About
 Neuritetracker is software for detection, tracking, and segmentation of neurons and neurites as they migrate in live cell imaging. It is designed for high-throughput image analysis.
 
-![Image processing pipeline](https://github.com/sgbasel/neuritetracker/trunk/Documentation/Images/figure.png "Image processing pipeline")
+![Image processing pipeline](https://github.com/sgbasel/neuritetracker/blob/master/trunk/Documentation/Images/figure.png "Image processing pipeline")
 
 ## Installation
 1. vlfeat 0.9.16 available at http://www.vlfeat.org/download/vlfeat-0.9.16-bin.tar.gz
