@@ -7,14 +7,15 @@ Neuritetracker is software for detection, tracking, and segmentation of neurons 
 ## Installation
 To install neuritetracker on your machine follow these steps:
 
-1. Clone the neuritetracker repository: ```git clone git@github.com:sgbasel/neuritetracker.git```
+1. Clone the neuritetracker repository: ```git clone git@github.com:sgbasel/neuritetracker.git``` or download a [zip file](https://github.com/sgbasel/neuritetracker/archive/master.zip) of the repository 
 2. vlfeat 0.9.16 available at http://www.vlfeat.org/download/vlfeat-0.9.16-bin.tar.gz
 2. Enter the Geodesics directory and run from matlab "compile_mex"
 
-Neuritetracker depends on the following 3rd party code:
-
-1. The [vlfeat library](http://www.vlfeat.org/download.html) available at http://www.vlfeat.org/download/vlfeat-0.9.20-bin.tar.gz
-2. The [Graph Algorithms in Matlab Code (gaimc)](https://github.com/dgleich/gaimc) available on github at https://github.com/dgleich/gaimc
+To run Neuritetracker you need the following 3rd party code. 
+ 
+1. A licensed copy of Matlab 
+2. (included) The [vlfeat library](http://www.vlfeat.org/download.html) available at http://www.vlfeat.org/download/vlfeat-0.9.20-bin.tar.gz
+3. (included) The [Graph Algorithms in Matlab Code (gaimc)](https://github.com/dgleich/gaimc) available on github at https://github.com/dgleich/gaimc
 
 ## Running the code
 The most important functions and scripts are:
