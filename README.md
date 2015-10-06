@@ -2,7 +2,8 @@
 
 
 ## About
-Neuritetracker is software for detection, tracking, and segmentation of neurons and neurites as they migrate in live cell imaging. It is designed for high-throughput image analysis. The image processing is divided into 9 steps. 
+Neuritetracker is software for detection, tracking, and segmentation of neurons and neurites as they migrate in live cell imaging. It is designed for high-throughput image analysis. The image processing is divided into 9 steps.
+
 1. Segmentation of the nucleus using Maximally Stable Extremal Regions (MSER).
 2. Soma region growing using a fast marching method on geodesic intensity distance to the nucleus.
 3. Cell tracking using a greedy graph-based optimization.
