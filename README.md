@@ -4,6 +4,15 @@
 ## About
 Neuritetracker is software for detection, tracking, and segmentation of neurons and neurites as they migrate in live cell imaging. It is designed for high-throughput image analysis. 
 
+## Installation
+1. vlfeat 0.9.16 available at http://www.vlfeat.org/download/vlfeat-0.9.16-bin.tar.gz
+2. Enter the Geodesics directory and run from matlab "compile_mex"
+
+## Running the code
+The most important functions and scripts are:
+1. trkTracking : to be run for one single sequence
+2. processPlate.m
+3. processListOfPlates.m
 
 ## Summary of the method
 The image processing is divided into 9 steps. Details of the method are described in
@@ -19,20 +28,9 @@ The image processing is divided into 9 steps. Details of the method are describe
 8. Identify candidate neurite terminals (extreme points), use backtracing & minimal spanning trees to reconstruct the neurites
 9. Store the reconstructed neurite model in a HDS graph representation
 
-
 ![Image processing pipeline](https://github.com/sgbasel/neuritetracker/blob/master/trunk/Documentation/Images/figure.png "Image processing pipeline")
 
-## Installation
-1. vlfeat 0.9.16 available at http://www.vlfeat.org/download/vlfeat-0.9.16-bin.tar.gz
-2. Enter the Geodesics directory and run from matlab "compile_mex"
-
-## Running the code
-The most important functions and scripts are:
-1. trkTracking : to be run for one single sequence
-2. processPlate.m
-3. processListOfPlates.m
-
-## Contents
+## Contents of the repository
 The code has been organised into many subdirectories:
 
 * Common
