@@ -44,7 +44,7 @@ The image processing is divided into 9 steps, summarized in the figure. A brief 
 9. Store the reconstructed neurite model in a HDS graph representation
 
 ## Contents of the repository
-The code has been organised into folders according to the various functions of the code. rectories:
+The code has been organised into folders according to the various functions of the code. They are organized according to the list below (followed by a short description):
 
 * trunk
  * CellsDetection - code to detect neuron cells in static images
