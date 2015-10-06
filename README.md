@@ -46,6 +46,13 @@ The image processing is divided into 9 steps, summarized in the figure. A brief 
 ## Contents of the repository
 The code has been organised into folders according to the various functions of the code. rectories:
 
+1. First ordered list item
+2. Another item
+⋅⋅* Unordered sub-list. 
+1. Actual numbers don't matter, just that it's a number
+⋅⋅1. Ordered sub-list
+4. And another item.
+
 * trunk
 ⋅⋅* CellsDetection - code to detect neuron cells in static images
 ⋅⋅* Common - code shared in several routines
