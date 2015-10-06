@@ -2,7 +2,7 @@
 
 
 ## About
-Neuritetracker is software for high throughput detection, tracking, and segmentation of neurons and neurites as they migrate in live cell imaging.
+Neuritetracker is software for high throughput detection, tracking, and segmentation of neuroblasts and neurites as they migrate in live cell imaging.
 
 ## Installation
 To install neuritetracker on your machine follow these steps:
@@ -25,8 +25,13 @@ The most important functions and scripts are:
 3. processListOfPlates.m
 
 ## Summary of the method
-The image processing is divided into 9 steps. Details of the method are described in
+Details of the method are described in the article
+
 1. L. Fusco, R. Lefort, K. Smith, F. Benmansour, G. Gonzalez, C. Barillari, B. Rinn, F. Fleuret, P. Fua, O. Pertz, [Computer vision profiling of neurite outgrowth dynamics reveals spatio-temporal modularity of Rho GTPase signaling](https://www.google.com), Journal of Cell Biology, *under review*
+
+The image processing is divided into 9 steps, summarized in the figure. A brief description of each step is provided below.
+
+![Image processing pipeline](https://github.com/sgbasel/neuritetracker/blob/master/trunk/Documentation/Images/figure.png "Image processing pipeline")
 
 1. Segmentation of the nucleus using Maximally Stable Extremal Regions (MSER).
 2. Soma region growing using a fast marching method on geodesic intensity distance to the nucleus.
@@ -37,8 +42,6 @@ The image processing is divided into 9 steps. Details of the method are describe
 7. Set a likelihood threshold to obtain cell bodies
 8. Identify candidate neurite terminals (extreme points), use backtracing & minimal spanning trees to reconstruct the neurites
 9. Store the reconstructed neurite model in a HDS graph representation
-
-![Image processing pipeline](https://github.com/sgbasel/neuritetracker/blob/master/trunk/Documentation/Images/figure.png "Image processing pipeline")
 
 ## Contents of the repository
 The code has been organised into many subdirectories:
