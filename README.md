@@ -44,17 +44,22 @@ The image processing is divided into 9 steps, summarized in the figure. A brief 
 9. Store the reconstructed neurite model in a HDS graph representation
 
 ## Contents of the repository
-The code has been organised into many subdirectories:
+The code has been organised into folders according to the various functions of the code. rectories:
 
-* Common
-* IO
-* CellsDetection
-* GreedyTracking
-* Geodesics
-* NeuritesDetection
-* NeuritesTracking
-* FeaturesExtraction
-* frangi_filter_version2a
-* gaimc
+* trunk
+..* CellsDetection - code to detect neuron cells in static images
+..* Common - code shared in several routines
+..* FeaturesExtraction - code to extract & organize features describing the cells
+..* frangi_filter_version2a - code for the Hessian-based filter to detect neurite-like structures
+..* gaimc - 3rd party software with useful graph manipulation functions
+..* Geodesics - code to efficiently compute geodesic distances
+..* GreedyTracking - code to perform tracking on a graph formed from object detections
+..* IO - code for file input/output
+..* NeuritesDetection - code for detecting neurites
+..* NeuritesTracking - code for tracking the neurites
+..* TestData - sample data to test the algorithm
+..* vlfeat-0.9.18 - 3rd party code for MSER calculation from the vlfeat library (version 0.9.18)
+
+
 
 
