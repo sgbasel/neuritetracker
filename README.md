@@ -7,7 +7,7 @@ Neuritetracker is software for detection, tracking, and segmentation of neurons 
 
 ## Summary of the method
 The image processing is divided into 9 steps. Details of the method are described in
-1. L. Fusco, R. Lefort, K. Smith, F. Benmansour, G. Gonzalez, C. Barillari, B. Rinn, F. Fleuret, P. Fua, O. Pertz, ![link to article] (https://www.google.com "Computer vision profiling of neurite outgrowth dynamics reveals spatio-temporal modularity of Rho GTPase signaling"), Journal of Cell Biology, *under review*
+1. L. Fusco, R. Lefort, K. Smith, F. Benmansour, G. Gonzalez, C. Barillari, B. Rinn, F. Fleuret, P. Fua, O. Pertz, [Computer vision profiling of neurite outgrowth dynamics reveals spatio-temporal modularity of Rho GTPase signaling](https://www.google.com), Journal of Cell Biology, *under review*
 
 1. Segmentation of the nucleus using Maximally Stable Extremal Regions (MSER).
 2. Soma region growing using a fast marching method on geodesic intensity distance to the nucleus.
