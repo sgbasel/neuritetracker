@@ -17,27 +17,27 @@ Sequence.BodyImageFilees      = parameters.sourceFilesBod;
 Sequence.NumberOfFrames       = parameters.TMAX;
 Sequence.UniqueID             = parameters.UniqueID;
 Sequence.DateProcessed        = date;
-Sequence.Entropy              = zeros(1, length(ImagesBody_original));
-Sequence.ImgDiffRed           = zeros(1, length(ImagesBody_original));
-Sequence.ImgDiffGreen         = zeros(1, length(ImagesBody_original));
+% Sequence.Entropy              = zeros(1, length(ImagesBody_original));
+% Sequence.ImgDiffRed           = zeros(1, length(ImagesBody_original));
+% Sequence.ImgDiffGreen         = zeros(1, length(ImagesBody_original));
 
-Entr        = zeros(1, length(ImagesBody_original));
-ImDiffRed   = zeros(1, length(ImagesBody_original));
-ImDiffGreen = zeros(1, length(ImagesBody_original));
-for k = 1:length(ImagesBody_original)
-    Entr(k)= entropy(ImagesBody_original{k});
-    if k == 1
-        ImDiffRed(k)   = 0;
-        ImDiffGreen(k) = 0;
-    else
-        ImDiffRed(k)   = sum(sum(imabsdiff(ImagesNuc_original{k}, ImagesNuc_original{k-1}))) / numel(ImagesNuc_original{k});
-        ImDiffGreen(k) = sum(sum(imabsdiff(ImagesBody_original{k}, ImagesBody_original{k-1}))) / numel(ImagesBody_original{k});
-    end
-end
-
-Sequence.Entropy              = Entr;
-Sequence.ImgDiffRed           = ImDiffRed;
-Sequence.ImgDiffGreen         = ImDiffGreen;
+% Entr        = zeros(1, length(ImagesBody_original));
+% ImDiffRed   = zeros(1, length(ImagesBody_original));
+% ImDiffGreen = zeros(1, length(ImagesBody_original));
+% for k = 1:length(ImagesBody_original)
+%     Entr(k)= entropy(ImagesBody_original{k});
+%     if k == 1
+%         ImDiffRed(k)   = 0;
+%         ImDiffGreen(k) = 0;
+%     else
+%         ImDiffRed(k)   = sum(sum(imabsdiff(ImagesNuc_original{k}, ImagesNuc_original{k-1}))) / numel(ImagesNuc_original{k});
+%         ImDiffGreen(k) = sum(sum(imabsdiff(ImagesBody_original{k}, ImagesBody_original{k-1}))) / numel(ImagesBody_original{k});
+%     end
+% end
+% 
+% Sequence.Entropy              = Entr;
+% Sequence.ImgDiffRed           = ImDiffRed;
+% Sequence.ImgDiffGreen         = ImDiffGreen;
 
 % now the tracks
 Sequence.TrackedCells = [];

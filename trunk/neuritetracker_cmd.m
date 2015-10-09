@@ -1,4 +1,4 @@
-function neuritetracker_cmd(NucChanStr, BodyChanStr, DestStr, parameters) %SeqIndexStr, Sample, magnification)
+function neuritetracker_cmd(NucChanStr, BodyChanStr, Output, parameters) %SeqIndexStr, Sample, magnification)
 %Neuritetracker is software for high throughput detection, tracking, and 
 %segmentation of neuroblasts and neurites as they migrate in live cell 
 %imaging.
@@ -85,6 +85,7 @@ parameters.NeuritePruningLengthThsh = 10;   % neurite detection
 parameters.NeuriteStabLenghtThresh  = 30;   % neurite tracking
 parameters.NeuriteWeightThresh      = 800;  % neurite tracking
 parameters.NeuriteMinTrackLength    = 10;   % neutite tracking
+parameters.MicronsPerPixel          = .0771;% data output
 % parameters.Magnification
 % parameters.BitDepth
 % parameters.ExperimentID
@@ -99,6 +100,7 @@ if (~isdeployed)
     p = p(1:end-19);
     addpath([p '/CellsDetection/']);
     addpath([p '/Common/']);
+    addpath([p '/export_fig/']);
     addpath([p '/FeaturesExtraction/']);
     addpath([p '/frangi_filter_version2a/']);
     addpath([p '/gaimc/']);
@@ -165,65 +167,54 @@ fprintf('   (elapsed time %1.2f seconds)\n', toc);
 % reorganize data
 fprintf('...organizing sequence data structure  '); tic;
 Sequence = trkReorganizeDataStructure(parameters, ImagesBody_original, ImagesNuc_original, Cells, trkSeq, TrackedNeurites, trkNSeq);
+Sequence.NeuriteProbability = P;
+Sequence.NeuronBodies = U;
 fprintf('   (elapsed time %1.2f seconds)\n', toc);
 
 
-keyboard;
+% load colors for rendering
+load cols3.mat;
 
-filename = [folder SeqIndexStr '.mat'];
-fprintf('saving %s...', filename);
-save(filename,  '-v7.3', 'Sequence', 'Cells', 'cols3');
-fprintf('\n');
-
-
-resultsFolder = [folder 'csv/'];
+output.saveMat = 1;
+output.saveCSVmeasurements = 1;
+output.movieNucleusDetection = 1;
 measurements = {'DistanceTraveled','Speed','NbBranchesPerNeuriteMean','ComplexityPerNeuriteMean','NumberOfNeurites','TotalNeuritesBranches','SomaMajorAxisLength','TotalNeuritesLength'};
-make_csv([cellIDs], measurements, Sequence, resultsFolder,0);
+output.destFolder = '/home/ksmith/temp/neuritetracker/';
 
-for t = 1:numel(ImagesBody)
-   figure(1);
-   imagesc(Somata{t}); colormap gray;
+
+
+% save the data files containing all Sequence info if requested (might be large)
+if output.saveMat
+    filename = fullfile(output.destFolder, sprintf('%s.mat', parameters.UniqueID));
+    fprintf('...saving %s\n', filename);
+    save(filename, '-v7.3', 'Sequence', 'Cells', 'cols3');
 end
 
-% for t = 1:numel(ImagesBody)
-%    figure(1);
-%    imagesc(Nuclei{t}); colormap gray;
-% end
+% save output to CSV files if requested
+if output.saveCSVmeasurements
+    FolderCSV = sprintf('%s/csv/', output.destFolder);
+    make_csv(1:Sequence.numberOfTracks, measurements, Sequence, FolderCSV);
+end
+
+keyboard;
+
+% make movie: nucleus detection 
+if output.movieNucleusDetection
+    fprintf('...rendering nucleus detection movie\n');
+    mv_detect_label = trkRenderFancy2(ImagesNuc, Cells, CellsList, tracks, cols3, 7);
+    FolderMovie = sprintf('%s/movie_nucleus_detections/', output.destFolder);
+    filestr = sprintf('%s_nucleus_detections', parameters.UniqueID);
+    trkMovie2(mv_detect_label, FolderMovie, filestr);
+end
 
 
 
-% for t = 1:numel(ImagesBody)
-%    figure(1);
-%    imagesc(ImagesBody{t}); colormap gray;
-% end
 
-% 
-% for t = 1:numel(ImagesBody)
-%    figure(1);
-%    imshow(2^16 - uint16(round(ImagesBody{t})));
-% %    imagesc(ImagesBody{t});
-% end
-% 
-% for t = 1:numel(ImagesBody)
-%    figure(1);
-%    imshow(2^16 - uint16(ImagesBody_original{t}));
-% %    imagesc(ImagesBody{t});
-% end
 
-% % TODO: get rid of these default settings!
-% parameters.quantileNucLow  = .02;
-% parameters.quantileNucHigh = .85;
-% parameters.quantileBodLow  = .02;
-% parameters.quantileBodHigh = .85;
-% IntensityAjustmentGreen.MED = 2537;
-% IntensityAjustmentGreen.STD = 28.9134;
-% IntensityAjustmentGreen.MAX = 11234;
-% IntensityAjustmentRed.MED = 205;
-% IntensityAjustmentRed.STD = 3.0508;
-% IntensityAjustmentRed.MAX = 327;
-% 
-% [Red  , Red_Original]   = trkReadImagesAndNormalize(TMAX, Rfolder, IntensityAjustmentRed);
-% [Green, Green_Original] = trkReadImagesAndNormalize(TMAX, Gfolder, IntensityAjustmentGreen);
+
+
+
+
 
 
 keyboard;
