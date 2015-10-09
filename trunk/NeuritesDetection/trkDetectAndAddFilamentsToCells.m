@@ -1,20 +1,19 @@
-function [Cells] = trkDetectAndAddFilamentsToCells(Green, Cells, Somata, FrangiOpt, IntensityAjustmentGreen, NeuriteDetectionParams)
+function [Cells, P, U, Regions ] = trkDetectAndAddFilamentsToCells(ImagesBody, Cells, Somata, parameters)
 
 %% First apply Frangi filter to all the images
-
-[Tubularity, J] = trkComputeTubularity(Green, FrangiOpt);
+fprintf('    * applying tubularity filters\n');
+FrangiOpt = parameters.Fopt;
+[Tubularity, J] = trkComputeTubularity(ImagesBody, FrangiOpt);
 
 %% find the proper sigmoid parameters to convert Frangi to probabilities
-
-[Asig Bsig] = trkSetSigmoid(Tubularity, J, Somata,  IntensityAjustmentGreen.STD, IntensityAjustmentGreen.MAX);
+fprintf('    * fitting sigmoid\n');
+[Asig, Bsig] = trkSetSigmoid(Tubularity, J, Somata,  parameters.bodySTD, parameters.bodyMAX);
 clear J;
 
 %% Get the tracked somata
-
 [SomataTracked] = trkGetTrackedSomata(Cells, Somata);
 
 %% apply sigmoid fitting to the tubularity, and attenuate on detected but not tracked somata
-
 P = cell(size(Tubularity));
 for t = 1:length(Tubularity)
     Tubularity{t}   = 0.001 + .998./(1+exp(Asig*log(Tubularity{t})+Bsig));
@@ -26,9 +25,10 @@ for t = 1:length(Tubularity)
 end
 
 %% Compute the geodesic maps from tracked somata
-
+fprintf('    * computing geodesic maps from tracked somata\n');
 [Regions, U, Length] = trkDetectFilamentsGlobalThresh(SomataTracked, P);
 % in what follows, exp(-U{t}) act like a probability of being a neurite.
+
 
 %% pre-allocate data for neurites in cells so that the parfor runs well
 for i =1:length(Cells)
@@ -37,6 +37,8 @@ for i =1:length(Cells)
         Cells(i).Neurites                   = false(size(Tubularity{1}));
         Cells(i).NumberOfNeurites           = 0;
         Cells(i).NeuritesList               = [];
+        Cells(i).RR                         = [];
+        Cells(i).CandidateEndPoints         = [];
     end
 end
 
@@ -53,16 +55,19 @@ RECURSIONLIMIT = 5000;
 set(0,'RecursionLimit',RECURSIONLIMIT);
 
 % Get the neurites detection and prining params
-minimalSizeOfNeurite             = NeuriteDetectionParams.minimalSizeOfNeurite;
-GEODESIC_DISTANCE_NEURITE_THRESH = NeuriteDetectionParams.GEODESIC_DISTANCE_NEURITE_THRESH;
-pad                              = NeuriteDetectionParams.KeyPointDetectionParam;
-ProbThresh                       = NeuriteDetectionParams.NeuriteProbabilityThreshold;
-PruningThreshold                 = NeuriteDetectionParams.NeuritePruningLengthThreshold;
+minimalSizeOfNeurite             = parameters.minimalSizeOfNeurite;
+GEODESIC_DISTANCE_NEURITE_THRESH = parameters.GeoDistNeuriteThresh;
+pad                              = parameters.KeyPointDetectionParam;
+ProbThresh                       = parameters.NeuriteProbabilityThresh;
+PruningThreshold                 = parameters.NeuritePruningLengthThsh;
 
-sz = size(Green{1});
+sz = size(ImagesBody{1});
 
+
+fprintf('    * finding candidate endpoints and backtracing');
 %%
 parfor dd = 1:length(Cells)
+% for dd = 1:length(Cells)
     if Cells(dd).ID > 0
         t = Cells(dd).Time;
         RR = (U{t} < -log(GEODESIC_DISTANCE_NEURITE_THRESH)) & (U{t} > 0) & (Regions{t} == Cells(dd).ID);%#ok
@@ -91,10 +96,12 @@ parfor dd = 1:length(Cells)
         end
         neurites = Cells(dd).Neurites;
         if(~isempty(listOfCandidateEndPoints))
-            [r c] =ind2sub(size(neurites), listOfCandidateEndPoints);
+            [r, c] =ind2sub(size(neurites), listOfCandidateEndPoints);
             UU = U{t};
             UU(  Regions{t} ~= Cells(dd).ID ) = 1e9;% to garentee that the back propagation searches only in the region of interest
             neurites = BackPropagateThreshold([r c]', UU, -log(ProbThresh)) ;
+            Cells(dd).RR = double(RR);
+            Cells(dd).CandidateEndPoints = [r c];
         else
             neurites = false(size(neurites));
         end
@@ -153,7 +160,7 @@ parfor dd = 1:length(Cells)
             [r,c]                            = ind2sub(sz, currentTree.NeuritePixelIdxList);
             Centroid                         = mean([c, r]);
             currentTree.Centroid             = Centroid;
-            currentTree.MeanGreenIntensities = mean(Green{currentTree.Time}(currentTree.NeuritePixelIdxList)); %#ok
+            currentTree.MeanGreenIntensities = mean(ImagesBody{currentTree.Time}(currentTree.NeuritePixelIdxList)); %#ok
             currentTree.CentroidOffset       = Centroid - Cells(dd).NucleusCentroid;
             
             idxSomaContact                   = currentTree.NeuritePixelIdxList(currentTree.Parents == -1);

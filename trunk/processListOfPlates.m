@@ -25,7 +25,7 @@ if isempty( strfind(path, [pwd '/Geodesics']) )
     addpath([pwd '/Geodesics']);
 end
 
-run([pwd '/vlfeat-0.9.16/toolbox/vl_setup']);
+run([pwd '/vlfeat-0.9.18/toolbox/vl_setup']);
 
 if isempty( strfind(path, [pwd '/CellsDetection']) )
     addpath([pwd '/CellsDetection']);
@@ -68,7 +68,7 @@ fclose(fid);
 inputDataRoot      = '/raid/data/store/';
 outputAnalisysRoot = '/raid/data/analysis/ProcessingRiwal/';
 
-matlabpool local
+% matlabpool local
 
 for i= 1:length(C{1})
     Sample	 = C{3}(i);
@@ -82,7 +82,7 @@ for i= 1:length(C{1})
             break;
         end
     end
-    inputFolder = [inputFolder   directoryName '/' ];%#ok<*AGROW>
+%     inputFolder = [inputFolder   directoryName '/' ];%#ok<*AGROW>
     disp(inputFolder);
     resultsFolder = [outputAnalisysRoot  Sample{1} '/'];
     if( exist(resultsFolder, 'dir') )
@@ -91,6 +91,8 @@ for i= 1:length(C{1})
     if( ~exist(resultsFolder, 'dir') )
         mkdir(resultsFolder);
     end
+    
+    keyboard;
     processPlate(inputFolder , resultsFolder, Sample{1}, Identifier{1}, resolution);
 end
 

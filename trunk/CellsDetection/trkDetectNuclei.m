@@ -1,4 +1,6 @@
-function Nuclei = trkDetectNuclei(R, SIGMA_RED, minArea, maxArea, MSER_MaxVariation, MSER_Delta)
+function Nuclei = trkDetectNuclei(R, parameters)
+
+
 
 
 TMAX = length(R);
@@ -7,19 +9,25 @@ EightBitsImages = cell(size(R));
 
 %parfor  t = 1:TMAX
 for t = 1:TMAX
+    if mod(t,10) == 0
+        fprintf('|');
+    end
     Rt = mat2gray(double(R{t}));
-    I = imgaussian(Rt, SIGMA_RED);
+    I = imgaussian(Rt, parameters.SmoothingNuc);
 	I = uint8(255*mat2gray(I));
     EightBitsImages{t} = I;
-    Nuclei{t} = vl_mser(I, 'MinDiversity', minArea/maxArea,...
-                                'MaxVariation', MSER_MaxVariation,...
-                                'MinArea', minArea/numel(I), ...
-                                'MaxArea', maxArea/numel(I), ...
+    Nuclei{t} = vl_mser(I, 'MinDiversity', parameters.MinNucleusArea/parameters.MaxNucleusArea,...
+                                'MaxVariation', parameters.MSER_MaxVariation,...
+                                'MinArea', parameters.MinNucleusArea/numel(I), ...
+                                'MaxArea', parameters.MaxNucleusArea/numel(I), ...
                                 'BrightOnDark', 1, ...
-                                'Delta',MSER_Delta) ;
+                                'Delta',parameters.MSER_Delta) ;
 end
 %%
 for t = 1:TMAX
+%     if mod(t,10) == 0
+%         fprintf('|');
+%     end
     mm = zeros(size(R{1}));
     for x = Nuclei{t}'
         s = vl_erfill(EightBitsImages{t}, x);

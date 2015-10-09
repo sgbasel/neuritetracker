@@ -1,9 +1,9 @@
-function [TrackedNeurites, TrackedNeuritesList, trkNSeq, timeNSeq] = trkTrackNeurites(Cells, CellsList, timeSeq, NeuriteTrackingParams)
+function [TrackedNeurites, TrackedNeuritesList, trkNSeq, timeNSeq] = trkTrackNeurites(Cells, CellsList, timeSeq, parameters)
 
 
-NEURITE_STABILITY_LENGTH_THRESHOLD = NeuriteTrackingParams.NEURITE_STABILITY_LENGTH_THRESHOLD;
-W_THRESH                           = NeuriteTrackingParams.W_THRESH;
-MIN_TRACK_LENGTH                   = NeuriteTrackingParams.MIN_TRACK_LENGTH;
+NEURITE_STABILITY_LENGTH_THRESHOLD = parameters.NeuriteStabLenghtThresh;
+W_THRESH                           = parameters.NeuriteWeightThresh;
+MIN_TRACK_LENGTH                   = parameters.NeuriteMinTrackLength;
 
 % extracting neurites
 [Neurites NeuritesList]  = getNeurites(Cells, CellsList, NEURITE_STABILITY_LENGTH_THRESHOLD);
@@ -66,6 +66,9 @@ function A = make_adjacency(NeuritesList, Neurites, timeSeq)
 Ndetection = length(Neurites);
 A = zeros(Ndetection);
 for t = 2:length(NeuritesList)
+    if mod(t,10) == 0
+        fprintf('|');
+    end
     for d = 1:length(NeuritesList{t})
         n_i         = NeuritesList{t}(d);              % neurite index
         nuc_i       = Neurites(n_i).CellTrackId;       % neurite's nucleus track

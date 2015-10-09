@@ -4,6 +4,9 @@ Ndetection = numel(Cells);
 A = zeros(Ndetection);
 W = zeros(Ndetection);
 for t = 2:length(CellsList)
+    if mod(t,10) == 0
+        fprintf('|');
+    end
     for d = 1:length(CellsList{t})
         d_i = CellsList{t}(d);
         centroid_i = Cells(d_i).NucleusCentroid;

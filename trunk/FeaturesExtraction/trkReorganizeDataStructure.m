@@ -1,6 +1,5 @@
-function Sequence = trkReorganizeDataStructure(folder, Rfiles, Gfiles, Green, Red, Sample, SequenceIdx,...
-                                               Cells, trkSeq, ...
-                                               TrackedNeurites, TrackedNeuritesList, trkNSeq, timeNSeq)
+function Sequence = trkReorganizeDataStructure(parameters, ImagesBody_original, ImagesNuc_original, Cells, trkSeq, ...
+                                               TrackedNeurites, trkNSeq)
 
 
 numberOfTracks = 0;
@@ -13,31 +12,26 @@ end
 % start with global informations
 Sequence = [];
 Sequence.numberOfTracks       = numberOfTracks;
-Sequence.InputRootDir         = folder;
-Sequence.RedImageFilenames    = Rfiles;
-Sequence.GreenImageFilenames  = Gfiles;
-Sequence.NumberOfFrames       = length(Rfiles);
-Sequence.Sample               = Sample;
-Sequence.SeqIdx               = str2double(SequenceIdx);
+Sequence.NucleusImageFiless   = parameters.sourceFilesNuc;
+Sequence.BodyImageFilees      = parameters.sourceFilesBod;
+Sequence.NumberOfFrames       = parameters.TMAX;
+Sequence.UniqueID             = parameters.UniqueID;
 Sequence.DateProcessed        = date;
-Sequence.Plate                = 'TODO';
-Sequence.Well                 = 'TODO';
-Sequence.Site                 = 'TODO';
-Sequence.Entropy              = zeros(1, length(Green));
-Sequence.ImgDiffRed           = zeros(1, length(Green));
-Sequence.ImgDiffGreen         = zeros(1, length(Green));
+Sequence.Entropy              = zeros(1, length(ImagesBody_original));
+Sequence.ImgDiffRed           = zeros(1, length(ImagesBody_original));
+Sequence.ImgDiffGreen         = zeros(1, length(ImagesBody_original));
 
-Entr        = zeros(1, length(Green));
-ImDiffRed   = zeros(1, length(Green));
-ImDiffGreen = zeros(1, length(Green));
-parfor k = 1:length(Green)
-    Entr(k)= entropy(Green{k});
+Entr        = zeros(1, length(ImagesBody_original));
+ImDiffRed   = zeros(1, length(ImagesBody_original));
+ImDiffGreen = zeros(1, length(ImagesBody_original));
+for k = 1:length(ImagesBody_original)
+    Entr(k)= entropy(ImagesBody_original{k});
     if k == 1
         ImDiffRed(k)   = 0;
         ImDiffGreen(k) = 0;
     else
-        ImDiffRed(k)   = sum(sum(imabsdiff(Red{k}, Red{k-1}))) / numel(Red{k});%#ok
-        ImDiffGreen(k) = sum(sum(imabsdiff(Green{k}, Green{k-1}))) / numel(Green{k});%#ok
+        ImDiffRed(k)   = sum(sum(imabsdiff(ImagesNuc_original{k}, ImagesNuc_original{k-1}))) / numel(ImagesNuc_original{k});
+        ImDiffGreen(k) = sum(sum(imabsdiff(ImagesBody_original{k}, ImagesBody_original{k-1}))) / numel(ImagesBody_original{k});
     end
 end
 
@@ -87,6 +81,7 @@ end
 
 %% Tracked cell bodies
 for i = 1:length(trkSeq)
+    fprintf('|');
     if ~isempty(trkSeq{i})
         currentTrack = [];
         % add some statistics

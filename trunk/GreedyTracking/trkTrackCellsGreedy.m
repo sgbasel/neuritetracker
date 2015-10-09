@@ -1,16 +1,15 @@
-function [Cells, tracks, trkSeq, timeSeq] = trkTrackCellsGreedy(CellsList, Cells, ...
-                                                              TrackingParameters)
+function [Cells, tracks, trkSeq, timeSeq] = trkTrackCellsGreedy(CellsList, Cells, parameters)
 
 %% create the adjacency matrix for all nearby detections
 Ndetection = numel(Cells);
-TEMPORAL_WINDOWS_SIZE       = TrackingParameters.TEMPORAL_WINDOWS_SIZE;
-SPATIAL_WINDOWS_SIZE        = TrackingParameters.SPATIAL_WINDOWS_SIZE;
-WT                          = TrackingParameters.WT;
-WSH                         = TrackingParameters.WSH;
-W_THRESH                    = TrackingParameters.W_THRESH;
-MIN_TRACK_LENGTH            = TrackingParameters.MIN_TRACK_LENGTH;
-NB_BEST_TRACKS              = TrackingParameters.NB_BEST_TRACKS;
-TMAX                        = length(CellsList);
+TEMPORAL_WINDOWS_SIZE       = parameters.TemporalWindowSize;
+SPATIAL_WINDOWS_SIZE        = parameters.SpatialWindowSize;
+WT                          = parameters.WeightTime;
+WSH                         = parameters.WeightShape;
+W_THRESH                    = parameters.WeightThreshold;
+MIN_TRACK_LENGTH            = parameters.MinTrackLength;
+NB_BEST_TRACKS              = parameters.NumberBestTracks;
+TMAX                        = parameters.TMAX;
 
 %% create the adjacency matrix for all nearby detections
 
@@ -18,7 +17,6 @@ TMAX                        = length(CellsList);
 
 
 %% apply the greedy tracking algorithm to link detections
-disp('...greedy tracking');
 T = trkGreedyConnect2(W,A,Cells,W_THRESH);
 
 

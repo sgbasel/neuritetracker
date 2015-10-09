@@ -1,32 +1,34 @@
-function [Cells CellsList] = trkGatherNucleiAndSomataDetections(Green, Red, Nuclei, Somata, CellsFilteringParameters)
+function [Cells, CellsList] = trkGatherNucleiAndSomataDetections(Green, Red, Nuclei, Somata, parameters)
 
 TMAX  = length(Nuclei);
 Cells = [];
 CellsList = cell(size(Nuclei));
 count = 1;
-minRed   =  1e9;
-maxRed   = -1e9;
-minGreen =  1e9;
-maxGreen = -1e9;
+minNucleusChannelIntensity      =  1e9;
+maxNucleusChannelIntensity      = -1e9;
+minBodyChannelIntensity         =  1e9;
+maxBodyChannelIntensity         = -1e9;
 
 % Get parameters to filter bad detections
 IMAGE_SIZE           = size(Green{1});
-DISTANCE_TO_BOUNDARY = CellsFilteringParameters.DISTANCE_TO_BOUNDARY;
-MAX_ECCENTRICITY     = CellsFilteringParameters.MAX_ECCENTRICITY;
-MIN_CIRCULARITY      = CellsFilteringParameters.MIN_CIRCULARITY;
-
+DISTANCE_TO_BOUNDARY = parameters.MinDistanceToBoundary;
+MAX_ECCENTRICITY     = parameters.MaxEccentricity;
+MIN_CIRCULARITY      = parameters.MinCircularity;
 
 for t = 1:TMAX
+    if mod(t,10) == 0
+        fprintf('|');
+    end
     detections_n = regionprops(Nuclei{t}, 'Area', 'Centroid', 'Eccentricity', 'MajorAxisLength', 'MinorAxisLength', 'Orientation', 'Perimeter', 'PixelIdxList');  %#ok<*MRPBW>
     detections_s = regionprops(Somata{t}, 'Area', 'Centroid', 'Eccentricity', 'MajorAxisLength', 'MinorAxisLength', 'Orientation', 'Perimeter', 'PixelIdxList');  %#ok<*MRPBW>
     if length(detections_n) ~= length(detections_s)
        error('the number of detected nuclei and somata should be the same !!') ;
     end
     
-    minRed      = min(minRed,   min(Red{t}(:)));
-    maxRed      = max(maxRed,   max(Red{t}(:)));
-    minGreen    = min(minGreen, min(Green{t}(:)));
-    maxGreen    = max(maxGreen, max(Green{t}(:)));
+    minNucleusChannelIntensity      = min(minNucleusChannelIntensity,   min(Red{t}(:)));
+    maxNucleusChannelIntensity      = max(maxNucleusChannelIntensity,   max(Red{t}(:)));
+    minBodyChannelIntensity    = min(minBodyChannelIntensity, min(Green{t}(:)));
+    maxBodyChannelIntensity    = max(maxBodyChannelIntensity, max(Green{t}(:)));
     
     if ~isempty(detections_n)
         for i =1:length(detections_n)
@@ -89,7 +91,7 @@ for t = 1:TMAX
     end
 end
 
-Cells(end).MinRed   = minRed;
-Cells(end).MaxRed   = maxRed;
-Cells(end).MinGreen = minGreen;
-Cells(end).MaxGreen = maxGreen;
+% Cells(end).MinRed   = minRed;
+% Cells(end).MaxRed   = maxRed;
+% Cells(end).MinGreen = minGreen;
+% Cells(end).MaxGreen = maxGreen;
