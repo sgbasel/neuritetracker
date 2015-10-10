@@ -7,8 +7,8 @@ To install neuritetracker on your machine follow these steps:
 
 1. Obtain a licensed copy of [Matlab](http://se.mathworks.com/products/matlab/) (or download a [trial version](https://se.mathworks.com/programs/nrd/matlab-trial-request.html?ref=ggl&s_eid=ppc_2537843722&q=matlab%20trial)).
 2. Clone the **neuritetracker** repository using the following command line ```git clone git@github.com:sgbasel/neuritetracker.git``` or download a [zip file](https://github.com/sgbasel/neuritetracker/archive/master.zip) of the repository 
-3. Set-up the **vlfeat library**. Run ```neuritetracker/vlfeat-0.9.18/toolbox/vl_setup.m``` at the Matlab prompt.
-4. Compile the **Geodesics** functions. Run ```neuritetracker/Geodesics/compile_mex.m``` at the Matlab prompt.
+3. Set-up the **vlfeat library**. Run ```vl_setup.m``` at the Matlab prompt (located in the ```neuritetracker/vlfeat-0.9.18/toolbox/``` folder).
+4. Compile the **Geodesics** functions. Run ```compile_mex.m``` at the Matlab prompt (located in the ```neuritetracker/Geodesics/``` folder).
 
 ## Running the code
 Open Matlab and
