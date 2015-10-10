@@ -7,18 +7,13 @@ Neuritetracker is software for high throughput detection, tracking, and segmenta
 ## Installation
 To install neuritetracker on your machine follow these steps:
 
-1. Clone the neuritetracker repository using the following command line ```git clone git@github.com:sgbasel/neuritetracker.git``` or download a [zip file](https://github.com/sgbasel/neuritetracker/archive/master.zip) of the repository 
-2. vlfeat 0.9.16 available at http://www.vlfeat.org/download/vlfeat-0.9.16-bin.tar.gz
-2. Enter the Geodesics directory and run from matlab "compile_mex"
-
-To run Neuritetracker you need the following 3rd party code. 
- 
-1. A licensed copy of Matlab 
-2. (included) The [vlfeat library](http://www.vlfeat.org/download.html) available at http://www.vlfeat.org/download/vlfeat-0.9.20-bin.tar.gz
-3. (included) The [Graph Algorithms in Matlab Code (gaimc)](https://github.com/dgleich/gaimc) available on github at https://github.com/dgleich/gaimc
+1. Obtain a licensed copy of Matlab.
+2. Clone the **neuritetracker** repository using the following command line ```git clone git@github.com:sgbasel/neuritetracker.git``` or download a [zip file](https://github.com/sgbasel/neuritetracker/archive/master.zip) of the repository 
+3. Set-up the **vlfeat library**. Run ```neuritetracker/vlfeat-0.9.18/toolbox/vl_setup.m``` at the Matlab prompt.
+4. Compile the **Geodesics** functions. Run ```neuritetracker/Geodesics/compile_mex.m``` at the Matlab prompt.
 
 ## Running the code
-The most important functions and scripts are:
+Open Matlab and
 
 1. trkTracking : to be run for one single sequence
 2. processPlate.m
@@ -44,7 +39,7 @@ The image processing is divided into 9 steps, summarized in the figure. A brief 
 9. Store the reconstructed neurite model in a HDS graph representation
 
 ## Contents of the repository
-The code has been organised into folders according to the various functions of the code. They are organized according to the list below (followed by a short description):
+The code has been organised into folders according to the various functions of the code. They are organized according to the list below followed by a short description.
 
 * trunk
  * CellsDetection - code to detect neuron cells in static images
@@ -57,8 +52,15 @@ The code has been organised into folders according to the various functions of t
  * IO - code for file input/output
  * NeuritesDetection - code for detecting neurites
  * NeuritesTracking - code for tracking the neurites
- * TestData - sample data to test the algorithm
+ * TestData - sample image sequences to test the algorithm
  * vlfeat-0.9.18 - 3rd party code for MSER calculation from the vlfeat library (version 0.9.18)
+
+## Dependencies
+Neuritetracker makes use of the following 3rd party software. 
+ 
+1. (included) The [vlfeat library](http://www.vlfeat.org/download.html) available at http://www.vlfeat.org/download/vlfeat-0.9.20-bin.tar.gz
+2. (included) The [Graph Algorithms in Matlab Code (gaimc)](https://github.com/dgleich/gaimc) available on github at https://github.com/dgleich/gaimc
+
 
 
 
