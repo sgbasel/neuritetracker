@@ -9,7 +9,7 @@ end
 
 for m = 1:numel(measurements)
     propertyname = measurements{m};
-    
+    fprintf('|');
 
     % get the time data
     tdata = 1:97;
@@ -78,7 +78,7 @@ for m = 1:numel(measurements)
         fprintf(fid, '\n');
     end
     
-    fprintf('wrote %s\n', filename);
+%     fprintf('wrote %s\n', filename);
     fclose(fid);
 end
 

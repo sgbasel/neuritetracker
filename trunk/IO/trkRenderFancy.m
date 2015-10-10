@@ -268,12 +268,14 @@ for t = 1:TMAX
     pause(.1);
     
     
-    % clip 7 pixels from each end
-    Ir = I(:,:,1); Ig = I(:,:,2); Ib = I(:,:,3);
-    Iout(:,:,1) = Ir(7:end-7, 7:end-7); 
-    Iout(:,:,2) = Ig(7:end-7, 7:end-7); 
-    Iout(:,:,3) = Ib(7:end-7, 7:end-7);
-    
+%     % clip 7 pixels from each end
+%     Ir = I(:,:,1); Ig = I(:,:,2); Ib = I(:,:,3);
+%     Iout(:,:,1) = Ir(7:end-7, 7:end-7); 
+%     Iout(:,:,2) = Ig(7:end-7, 7:end-7); 
+%     Iout(:,:,3) = Ib(7:end-7, 7:end-7);
+    Iout = I;
+
+
     % store the image for writing a movie file
     mv{t} = Iout;
 

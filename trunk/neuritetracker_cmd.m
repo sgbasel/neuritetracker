@@ -48,59 +48,12 @@ function neuritetracker_cmd(NucChanStr, BodyChanStr, Output, parameters) %SeqInd
 %SOFTWARE.
 
 
-
-% paramaters
-parameters.bodySTD                  = 28.9134; % normalization (TODO: remove this)
-parameters.bodyMAX                  = 11234;   % neurite detection
-parameters.nucSTD                   = 3.0508;  % normalization (TODO: remove this)
-parameters.MaxNucleusArea           = 170;  % nucleus detection
-parameters.MinNucleusArea           = 70;   % nucleus detection
-parameters.SmoothingNuc             = 2.0;  % nucleus detection
-parameters.MSER_MaxVariation        = 0.2;  % nucleus detection
-parameters.MSER_Delta               = 2;    % nucleus detection
-parameters.GeodesicDistanceThresh   = 2e-6; % somata detection
-parameters.LengthThresh             = 7;    % somata detection
-parameters.StdMultFactor            = 1.5;  % somata detection
-parameters.MinDistanceToBoundary    = 10;   % cell detection filtering
-parameters.MaxEccentricity          = 0.85; % cell detection filtering
-parameters.MinCircularity           = 0.2;  % cell detection filtering
-parameters.TemporalWindowSize       = 4; 	% graph tracking
-parameters.SpatialWindowSize        = 50; 	% graph tracking
-parameters.MinTrackLength           = 20;	% graph tracking
-parameters.NumberBestTracks         = 40; 	% graph tracking
-parameters.WeightTime               = 50; 	% graph tracking
-parameters.WeightShape              = 40; 	% graph tracking
-parameters.WeightThreshold          = 200; 	% graph tracking
-parameters.Fopt.FrangiScaleRange  	= [1 2];% neurite detection
-parameters.Fopt.FrangiScaleRatio 	= 1; 	% neurite detection
-parameters.Fopt.FrangiBetaOne   	= .5;	% neurite detection
-parameters.Fopt.FrangiBetaTwo     	= 15;	% neurite detection
-parameters.Fopt.BlackWhite        	= false;% neurite detection
-parameters.Fopt.verbose           	= false;% neurite detection
-parameters.minimalSizeOfNeurite     = 10;   % neurite detection
-parameters.GeoDistNeuriteThresh     = 0.0001; % neurite detection
-parameters.KeyPointDetectionParam   = 5;    % neurite detection
-parameters.NeuriteProbabilityThresh = 0.2;  % neurite detection
-parameters.NeuritePruningLengthThsh = 10;   % neurite detection
-parameters.NeuriteStabLenghtThresh  = 30;   % neurite tracking
-parameters.NeuriteWeightThresh      = 800;  % neurite tracking
-parameters.NeuriteMinTrackLength    = 10;   % neutite tracking
-parameters.MicronsPerPixel          = .0771;% data output
-% parameters.Magnification
-% parameters.BitDepth
-% parameters.ExperimentID
-% parameters.PlateWellID
-parameters.UniqueID                 = 'TestSeq';
-parameters.SeqIdxStr                = '001';
-
-
 % add necessary paths
 if (~isdeployed)
     p = mfilename('fullpath');
     p = p(1:end-19);
     addpath([p '/CellsDetection/']);
     addpath([p '/Common/']);
-    addpath([p '/export_fig/']);
     addpath([p '/FeaturesExtraction/']);
     addpath([p '/frangi_filter_version2a/']);
     addpath([p '/gaimc/']);
@@ -112,11 +65,28 @@ if (~isdeployed)
     addpath([p '/vlfeat-0.9.18/']);
 end
 
-% run vl_setup to set paths for VLFEAT library
-run([p '/vlfeat-0.9.18/toolbox/vl_setup']);
+
+% read parameters from the configuration file
+S = ini2struct([p '/settings.ini']);
+output = S.output;
+parameters = S.defaultparameters; clear S;
+output.measurements = regexp(output.measurements, ',', 'split');
 
 % verify that parameters are set to valid values, otherwise set to default
 % TODO
+parameters.UniqueID                 = 'TestSeq';
+parameters.SeqIdxStr                = '001';
+% parameters.Magnification
+% parameters.BitDepth
+% parameters.ExperimentID
+% parameters.PlateWellID
+
+output.destFolder                   = '/home/ksmith/temp/neuritetracker/';
+if ~exist(output.destFolder, 'dir'); mkdir(output.destFolder); end;
+
+% run vl_setup to set paths for VLFEAT library
+run([p '/vlfeat-0.9.18/toolbox/vl_setup']);
+
 
 % get a list of image files for the nucleus and cell body channels
 parameters.sourceFilesNuc = trkGetFileList(NucChanStr);
@@ -157,15 +127,15 @@ fprintf('   (elapsed time %1.2f seconds)\n', toc);
 % detect and add neurite-like filaments to cells
 fprintf('...detecting neurite-like filaments\n'); tic;
 [Cells, P, U, Regions] = trkDetectAndAddFilamentsToCells(ImagesBody, Cells, Somata, parameters);
-fprintf('    (elapsed time %1.2f seconds)\n', toc);
+fprintf('   (elapsed time %1.2f seconds)\n', toc);
 
 % graph-based tracking
-fprintf('...tracking neurite detections         '); tic;
+fprintf('...tracking neurite detections          '); tic;
 [TrackedNeurites, TrackedNeuritesList, trkNSeq, timeNSeq] = trkTrackNeurites(Cells, CellsList, timeSeq, parameters);
 fprintf('   (elapsed time %1.2f seconds)\n', toc);
 
 % reorganize data
-fprintf('...organizing sequence data structure  '); tic;
+fprintf('...organizing sequence data structure   '); tic;
 Sequence = trkReorganizeDataStructure(parameters, ImagesBody_original, ImagesNuc_original, Cells, trkSeq, TrackedNeurites, trkNSeq);
 Sequence.NeuriteProbability = P;
 Sequence.NeuronBodies = U;
@@ -174,14 +144,6 @@ fprintf('   (elapsed time %1.2f seconds)\n', toc);
 
 % load colors for rendering
 load cols3.mat;
-
-output.saveMat = 1;
-output.saveCSVmeasurements = 1;
-output.movieNucleusDetection = 1;
-measurements = {'DistanceTraveled','Speed','NbBranchesPerNeuriteMean','ComplexityPerNeuriteMean','NumberOfNeurites','TotalNeuritesBranches','SomaMajorAxisLength','TotalNeuritesLength'};
-output.destFolder = '/home/ksmith/temp/neuritetracker/';
-
-
 
 % save the data files containing all Sequence info if requested (might be large)
 if output.saveMat
@@ -192,23 +154,14 @@ end
 
 % save output to CSV files if requested
 if output.saveCSVmeasurements
-    FolderCSV = sprintf('%s/csv/', output.destFolder);
-    make_csv(1:Sequence.numberOfTracks, measurements, Sequence, FolderCSV);
+    fprintf('...writing CSV measurement files        '); tic;
+    FolderCSV = sprintf('%s/csv/%s/', output.destFolder, parameters.UniqueID);
+    make_csv(1:Sequence.numberOfTracks, output.measurements, Sequence, FolderCSV);
+    fprintf('   (elapsed time %1.2f seconds)\n', toc);
 end
 
-keyboard;
-
-% make movie: nucleus detection 
-if output.movieNucleusDetection
-    fprintf('...rendering nucleus detection movie\n');
-    mv_detect_label = trkRenderFancy2(ImagesNuc, Cells, CellsList, tracks, cols3, 7);
-    FolderMovie = sprintf('%s/movie_nucleus_detections/', output.destFolder);
-    filestr = sprintf('%s_nucleus_detections', parameters.UniqueID);
-    trkMovie2(mv_detect_label, FolderMovie, filestr);
-end
-
-
-
+% write requested movies to file
+trkMakeMovies(ImagesNuc, ImagesBody, Cells, CellsList, tracks, Sequence, output, parameters, cols3);
 
 
 

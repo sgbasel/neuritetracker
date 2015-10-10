@@ -1,9 +1,20 @@
 function [Cells, P, U, Regions ] = trkDetectAndAddFilamentsToCells(ImagesBody, Cells, Somata, parameters)
 
+% %% First apply Frangi filter to all the images
+% fprintf('    * applying tubularity filters\n');
+% FrangiOpt = parameters.Fopt;
+% [Tubularity, J] = trkComputeTubularity(ImagesBody, FrangiOpt);
+
 %% First apply Frangi filter to all the images
 fprintf('    * applying tubularity filters\n');
-FrangiOpt = parameters.Fopt;
+FrangiOpt.FrangiScaleRange      = parameters.FrangiScaleRange;
+FrangiOpt.FrangiScaleRatio      = parameters.FrangiScaleRatio;
+FrangiOpt.FrangiBetaOne         = parameters.FrangiBetaOne;
+FrangiOpt.FrangiBetaTwo         = parameters.FrangiBetaTwo;
+FrangiOpt.BlackWhite            = parameters.BlackWhite;
+FrangiOpt.verbose               = parameters.verbose;
 [Tubularity, J] = trkComputeTubularity(ImagesBody, FrangiOpt);
+
 
 %% find the proper sigmoid parameters to convert Frangi to probabilities
 fprintf('    * fitting sigmoid\n');

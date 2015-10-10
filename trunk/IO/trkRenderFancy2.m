@@ -86,7 +86,8 @@ for t = 1:TMAX
             pixlist = currentCell.SomaPixelIdxList;
             B(pixlist) = 1;
 %             poly = mask2poly(B, 'Exact', 'MINDIST');
-            poly = mask2poly(B);
+            poly = mask2poly(B, 'MINDIST');
+            poly(poly(:,1) < 0,:) = [];
             Soma(d).x = poly(:,1);
             Soma(d).y = poly(:,2);
 %             BW = bwboundaries(B, 8, 'noholes');            
@@ -101,7 +102,8 @@ for t = 1:TMAX
             B(pixlist) = 1;
             B = bwmorph(B, 'thin');       % shrink the nucleus by 1 px
 %             poly = mask2poly(B, 'Exact', 'MINDIST');
-            poly = mask2poly(B);
+            poly = mask2poly(B, 'MINDIST');
+            poly(poly(:,1) < 0,:) = [];
             Nuc(d).x = poly(:,1);
             Nuc(d).y = poly(:,2);
 %             BW = bwboundaries(B, 8, 'noholes');   
@@ -116,7 +118,8 @@ for t = 1:TMAX
                 pixlist = find(currentCell.RR > 0);
                 B(pixlist) = 1;
 %                 poly = mask2poly(B, 'Exact', 'MINDIST');
-                poly = mask2poly(B);
+                poly = mask2poly(B, 'MINDIST');
+                poly(poly(:,1) < 0,:) = [];
                 Whole(d).x = poly(:,1);
                 Whole(d).y = poly(:,2);
 %                 BW = bwboundaries(B, 8, 'noholes');
@@ -148,7 +151,6 @@ for t = 1:TMAX
             SomaEdgeColor = color;
             NucleusColor = color;
             EndPointColor = [0 0 0];
-            
             
             switch mode
                 case 7
@@ -216,18 +218,17 @@ for t = 1:TMAX
     
     
     
-    
+
     
 
     refresh;
     drawnow;
-    pause(.1);
 
     
     set(f, 'Position', [1937 262 696 520]);
 %     F = getframe(gcf);
 %     I = F.cdata;
-    I = zbuffer_cdata(f);
+    I = opengl_cdata(f);
     Ir = I(:,:,1); Ig = I(:,:,2); Ib = I(:,:,3);
     
     
@@ -258,21 +259,20 @@ for t = 1:TMAX
     end
     I(:,:,1) = Ir; I(:,:,2) = Ig; I(:,:,3) = Ib;
     
-    
-    
-    
-    imshow(I);
-	refresh;
-    drawnow;
-    pause(.1);
-    
-%     keyboard;
+
+%     imshow(I);
+% 	refresh;
+%     drawnow;
+%     pause(.1);
+
+
     
     % clip 7 pixels from each end
-    Ir = I(:,:,1); Ig = I(:,:,2); Ib = I(:,:,3);
-    Iout(:,:,1) = Ir(7:end-7, 7:end-7); 
-    Iout(:,:,2) = Ig(7:end-7, 7:end-7); 
-    Iout(:,:,3) = Ib(7:end-7, 7:end-7);
+%     Ir = I(:,:,1); Ig = I(:,:,2); Ib = I(:,:,3);
+%     Iout(:,:,1) = Ir(7:end-7, 7:end-7); 
+%     Iout(:,:,2) = Ig(7:end-7, 7:end-7); 
+%     Iout(:,:,3) = Ib(7:end-7, 7:end-7);
+    Iout = I;
     
     % store the image for writing a movie file
     mv{t} = Iout;
