@@ -2,7 +2,7 @@
 
 
 ## About
-Neuritetracker is software for high throughput detection, tracking, and segmentation of neuroblasts and neurites as they migrate in live cell imaging.
+Neuritetracker is software for high throughput detection, tracking, and segmentation of neuroblasts in live cell imaging.
 
 ## Installation
 To install neuritetracker on your machine follow these steps:
