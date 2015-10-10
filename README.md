@@ -1,8 +1,6 @@
 # High throughput detection & tracking of neurons in live cell imaging
 
-
-## About
-Neuritetracker is software for high throughput detection, tracking, and segmentation of neuroblasts in live cell imaging.
+Neuritetracker is software for high throughput detection, tracking, and segmentation of neuroblasts in live cell imaging. It runs in Matlab with a GUI interface, analyzes image sequences, and stores results as movies and CSV files.
 
 ## Installation
 To install neuritetracker on your machine follow these steps:
