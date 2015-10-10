@@ -5,7 +5,7 @@ Neuritetracker is software for high throughput detection, tracking, and segmenta
 ## Installation
 To install neuritetracker on your machine follow these steps:
 
-1. Obtain a licensed copy of [Matlab](http://se.mathworks.com/products/matlab/) (or download a [trial version](https://se.mathworks.com/programs/nrd/matlab-trial-request.html?ref=ggl&s_eid=ppc_2537843722&q=matlab%20trial)).
+1. Obtain a licensed copy of [Matlab](http://www.mathworks.com/products/matlab/) (or download a [trial version](https://www.mathworks.com/programs/nrd/matlab-trial-request.html?ref=ggl&s_eid=ppc_2537843722&q=matlab%20trial)).
 2. Clone the **neuritetracker** repository using the following command line ```git clone git@github.com:sgbasel/neuritetracker.git``` or download a [zip file](https://github.com/sgbasel/neuritetracker/archive/master.zip) of the repository 
 3. Set-up the **vlfeat library**. Run ```vl_setup.m``` at the Matlab prompt (located in the ```neuritetracker/trunk/vlfeat-0.9.18/toolbox/``` folder).
 4. Compile the **Geodesics** functions. Run ```compile_mex.m``` at the Matlab prompt (located in the ```neuritetracker/trunk/Geodesics/``` folder).
@@ -39,19 +39,19 @@ The image processing is divided into 9 steps, summarized in the figure. A brief 
 ## Contents of the repository
 The code has been organised into folders according to the various functions of the code. They are organized in the ```neuritetracker``` folder according to the list below followed by a short description.
 
-* trunk
- * CellsDetection - code to detect neuron cells in static images
- * Common - code shared in several routines
- * FeaturesExtraction - code to extract & organize features describing the cells
- * frangi_filter_version2a - code for the Hessian-based filter to detect neurite-like structures
- * gaimc - 3rd party software with useful graph manipulation functions
- * Geodesics - code to efficiently compute geodesic distances
- * GreedyTracking - code to perform tracking on a graph formed from object detections
- * IO - code for file input/output
- * NeuritesDetection - code for detecting neurites
- * NeuritesTracking - code for tracking the neurites
- * TestData - sample image sequences to test the algorithm
- * vlfeat-0.9.18 - 3rd party code for MSER calculation from the vlfeat library (version 0.9.18)
+* _trunk_
+ * _CellsDetection_ - code to detect neuron cells in static images
+ * _Common_ - code shared in several routines
+ * _FeaturesExtraction_ - code to extract & organize features describing the cells
+ * _frangi-filter-version2a_ - code for the Hessian-based filter to detect neurite-like structures
+ * _gaimc_ - 3rd party software with useful graph manipulation functions
+ * _Geodesics_ - code to efficiently compute geodesic distances
+ * _GreedyTracking_ - code to perform tracking on a graph formed from object detections
+ * _IO_ - code for file input/output
+ * _NeuritesDetection_ - code for detecting neurites
+ * _NeuritesTracking_ - code for tracking the neurites
+ * _TestData_ - sample image sequences to test the algorithm
+ * _vlfeat-0.9.18_ - 3rd party code for MSER calculation from the vlfeat library (version 0.9.18)
 
 The ```neuritetracker/trunk/``` folder also contains several files, described below.
  * ```neuritetracker_gui.m``` - a graphical user interface used to run neuritetracker
