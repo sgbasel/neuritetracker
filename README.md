@@ -55,15 +55,15 @@ The code has been organised into folders according to the various functions of t
 
 The ```neuritetracker/trunk/``` folder also contains several files, described below.
  * ```neuritetracker_gui.m``` - a graphical user interface used to run neuritetracker
- * ```neuritetracker_cmd.m``` - the main command-line function for neuritetracker
+ * ```neuritetracker_cmd.m``` - the main command-line function to run neuritetracker
  * ```settings.ini```       - contains default parameters and configurations for neuritetracker
  
 
 ## Dependencies
-Neuritetracker makes use of the following 3rd party software. 
+Neuritetracker makes use of the following 3rd party software, which is included in the ```neuritetracker``` repository. 
  
-1. (included) The [vlfeat library](http://www.vlfeat.org/download.html) available at http://www.vlfeat.org/download/vlfeat-0.9.20-bin.tar.gz
-2. (included) The [Graph Algorithms in Matlab Code (gaimc)](https://github.com/dgleich/gaimc) available on github at https://github.com/dgleich/gaimc
+1. The [vlfeat library](http://www.vlfeat.org/download.html) available at http://www.vlfeat.org/download/vlfeat-0.9.20-bin.tar.gz
+2. The [Graph Algorithms in Matlab Code (gaimc)](https://github.com/dgleich/gaimc) available on github at https://github.com/dgleich/gaimc
 
 
 
