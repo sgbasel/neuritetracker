@@ -53,7 +53,7 @@ catch
         fprintf('Warning: unable to encode %s.avi\n', filename);
 end
 
-keyboard;
+% keyboard;
 
 % cd(oldpath);
 

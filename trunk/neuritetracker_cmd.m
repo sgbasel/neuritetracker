@@ -1,4 +1,4 @@
-function Sequence = neuritetracker_cmd(NucChanVar, BodyChanVar, output, parameters) %SeqIndexStr, Sample, magnification)
+function Sequence = neuritetracker_cmd(NucChanVar, BodyChanVar, parameters, output) %SeqIndexStr, Sample, magnification)
 %Neuritetracker is software for high throughput detection, tracking, and 
 %segmentation of neuroblasts and neurites as they migrate in live cell 
 %imaging.
@@ -75,7 +75,7 @@ end
 [parameters, output] = trkValidateInput(p, parameters, output);
 
 fprintf('******************** Neuritetracker v0.1 ********************\n');
-fprintf('   results stored in %s\n', output.destFolder);
+fprintf('   results stored in %s  (UniqueID: %s)\n', output.destFolder, parameters.UniqueID);
 
 % run vl_setup to set paths for VLFEAT library
 run([p '/vlfeat-0.9.18/toolbox/vl_setup']);
@@ -164,7 +164,7 @@ trkMakeMovies(ImagesNuc, ImagesBody, Cells, CellsList, tracks, Sequence, output,
 
 
 
-keyboard;
+% keyboard;
 
 
 
