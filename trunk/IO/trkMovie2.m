@@ -35,16 +35,18 @@ end
 
 try
 %     v = VideoWriter([filename '.mp4'], 'Quality', 100, 'FrameRate', 12);
-    v = VideoWriter([destFolder filename '.mp4']);
+%     v = VideoWriter([destFolder filename '.mp4'], 'H.264');
+    v = VideoWriter([destFolder filename]);
+%     v = VideoWriter([destFolder filename],'Motion JPEG AVI');
     v.Quality = 100;
-    v.FrameRate = 12;
+    v.FrameRate = 10;
     open(v);
     for i = 1:numel(mv)
         writeVideo(v, mv{i});
     end
     close(v);    
 catch
-        fprintf('Warning: unable to encode %s.mp4\n', filename);
+        fprintf('Warning: unable to encode %s.avi\n', filename);
 end
 
 

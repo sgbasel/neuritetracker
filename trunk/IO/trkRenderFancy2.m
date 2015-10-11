@@ -47,6 +47,7 @@ for t = 1:TMAX
     if numel(size(Images{t})) == 2
         I = double(Images{t});
         I = 1- mat2gray(I);
+        I = imadjust(I);
         Ir = I; Ig = I; Ib = I;
     else
         I = Images{t};

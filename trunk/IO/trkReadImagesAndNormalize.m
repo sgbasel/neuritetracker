@@ -2,8 +2,8 @@ function [I_normalized, I_original] = trkReadImagesAndNormalize(fileList, parame
 
 
 
-I_normalized = cell(1,parameters.TMAX);
-I_original   = cell(1,parameters.TMAX);
+% I_normalized = cell(1,parameters.TMAX);
+% I_original   = cell(1,parameters.TMAX);
 
 switch channel
     case 'body'
@@ -12,15 +12,34 @@ switch channel
         STD = parameters.nucSTD;
 end
 
-% read the original images into memory
-% fprintf('...loading files ');
-for t = 1:numel(fileList)
-    if mod(t,10) == 0
-        fprintf('|');
-    end
-    I_original{t} = double(imread(fileList{t}));
+
+% get info about the tif
+InfoImage=imfinfo(fileList{1});
+NumberImages=numel(InfoImage);
+
+% read the original image(s) into memory
+switch NumberImages
+    case 1
+        for t = 1:numel(fileList)
+            if mod(t,10) == 0
+                fprintf('|');
+            end
+            I_original{t} = double(imread(fileList{t}));
+        end
+    otherwise  % multi-page tif
+        TifLink = Tiff(fileList{1}, 'r');
+        for t=1:NumberImages
+            if mod(t,10) == 0
+                fprintf('|');
+            end
+            TifLink.setDirectory(t);
+            I_original{t}=double(TifLink.read());
+        end
+        TifLink.close();
 end
 
+
+% apply normalization to the images
 for t = 1:numel(I_original)
     Ilist = I_original{t}(:);
     Ilist = Ilist(Ilist ~= 0);
@@ -33,6 +52,9 @@ for t = 1:numel(I_original)
     I_normalized{t} = I_original{t} - originalMedian;
     I_normalized{t} = I_original{t} * (STD / originalStd);
 end
+
+
+
 % fprintf('\n');
 
 % disp(['   loaded (' num2str(t) '/' num2str(TMAX) ') images from:  ' folder]);

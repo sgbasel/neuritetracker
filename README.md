@@ -57,7 +57,7 @@ The ```neuritetracker/trunk/``` folder also contains several files, described be
  * ```neuritetracker_gui.m``` - a graphical user interface used to run neuritetracker
  * ```neuritetracker_cmd.m``` - the main command-line function to run neuritetracker
  * ```settings.ini```       - contains default parameters and configurations for neuritetracker
- 
+ * ```neuritetracker_gui.fig``` - matlab gui figure file
 
 ## Dependencies
 Neuritetracker makes use of the following 3rd party software, which is included in the ```neuritetracker``` repository. 

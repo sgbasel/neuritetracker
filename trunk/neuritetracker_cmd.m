@@ -1,4 +1,4 @@
-function neuritetracker_cmd(NucChanStr, BodyChanStr, Output, parameters) %SeqIndexStr, Sample, magnification)
+function neuritetracker_cmd(NucChanStr, BodyChanStr, output, parameters) %SeqIndexStr, Sample, magnification)
 %Neuritetracker is software for high throughput detection, tracking, and 
 %segmentation of neuroblasts and neurites as they migrate in live cell 
 %imaging.
@@ -81,7 +81,7 @@ parameters.SeqIdxStr                = '001';
 % parameters.ExperimentID
 % parameters.PlateWellID
 
-output.destFolder                   = '/home/ksmith/temp/neuritetracker/';
+output.destFolder                   = '/home/ksmith/temp/neuritetracker5/';
 if ~exist(output.destFolder, 'dir'); mkdir(output.destFolder); end;
 
 % run vl_setup to set paths for VLFEAT library
@@ -92,7 +92,7 @@ run([p '/vlfeat-0.9.18/toolbox/vl_setup']);
 parameters.sourceFilesNuc = trkGetFileList(NucChanStr);
 parameters.sourceFilesBod = trkGetFileList(BodyChanStr);
 if numel(parameters.sourceFilesNuc) ~= numel(parameters.sourceFilesBod); error('NEURITETRACKER:trkGetFileList', 'The number of images is not the same in both channels'); end;
-parameters.TMAX = numel(parameters.sourceFilesNuc);
+
 
 
 % read each image channel and normalize the images
@@ -103,6 +103,7 @@ fprintf('   (elapsed time %1.2f seconds)\n', toc); tic;
 fprintf('...loading cell body image files        ');
 [ImagesBody, ImagesBody_original] = trkReadImagesAndNormalize(parameters.sourceFilesBod, parameters, 'body');
 fprintf('   (elapsed time %1.2f seconds)\n', toc);
+parameters.TMAX = numel(ImagesNuc);
 
 % Detect Nuclei
 fprintf('...detecting Nuclei                     '); tic;
@@ -116,22 +117,22 @@ fprintf('   (elapsed time %1.2f seconds)\n', toc);
 
 % gather detections into cells
 fprintf('...filtering detections & making cells  '); tic;
-[Cells CellsList] = trkGatherNucleiAndSomataDetections(ImagesBody_original, ImagesNuc_original, Nuclei, Somata, parameters); 
+[Cells, CellsList] = trkGatherNucleiAndSomataDetections(ImagesBody_original, ImagesNuc_original, Nuclei, Somata, parameters); 
 fprintf('   (elapsed time %1.2f seconds)\n', toc);
 
 % graph-based tracking
 fprintf('...tracking to link cell detections     '); tic;
-[Cells, tracks, trkSeq, timeSeq] = trkTrackCellsGreedy(CellsList, Cells, parameters);%#ok
+[Cells, tracks, trkSeq, timeSeq] = trkTrackCellsGreedy(CellsList, Cells, parameters);
 fprintf('   (elapsed time %1.2f seconds)\n', toc);
 
 % detect and add neurite-like filaments to cells
 fprintf('...detecting neurite-like filaments\n'); tic;
-[Cells, P, U, Regions] = trkDetectAndAddFilamentsToCells(ImagesBody, Cells, Somata, parameters);
+[Cells, P, U, Regions] = trkDetectAndAddFilamentsToCells(ImagesBody, Cells, Somata, parameters); %#ok<NASGU>
 fprintf('   (elapsed time %1.2f seconds)\n', toc);
 
 % graph-based tracking
 fprintf('...tracking neurite detections          '); tic;
-[TrackedNeurites, TrackedNeuritesList, trkNSeq, timeNSeq] = trkTrackNeurites(Cells, CellsList, timeSeq, parameters);
+[TrackedNeurites, TrackedNeuritesList, trkNSeq, timeNSeq] = trkTrackNeurites(Cells, CellsList, timeSeq, parameters); %#ok<NASGU,ASGLU>
 fprintf('   (elapsed time %1.2f seconds)\n', toc);
 
 % reorganize data
