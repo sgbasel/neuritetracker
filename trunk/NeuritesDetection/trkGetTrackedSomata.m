@@ -1,7 +1,8 @@
 function [SomataTracked] = trkGetTrackedSomata(Cells, Somata)
 
 SomataTracked = Somata;
-parfor t = 1:length(SomataTracked)
+% parfor t = 1:length(SomataTracked)
+for t = 1:length(SomataTracked)
    SomataTracked{t} = zeros(size(Somata{t}));
 end
 

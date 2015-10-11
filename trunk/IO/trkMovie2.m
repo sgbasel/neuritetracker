@@ -36,6 +36,10 @@ end
 try
 %     v = VideoWriter([filename '.mp4'], 'Quality', 100, 'FrameRate', 12);
 %     v = VideoWriter([destFolder filename '.mp4'], 'H.264');
+    if ~strcmp(destFolder(end), '/')
+        destFolder(end+1) = '/';
+    end
+
     v = VideoWriter([destFolder filename]);
 %     v = VideoWriter([destFolder filename],'Motion JPEG AVI');
     v.Quality = 100;
@@ -49,7 +53,7 @@ catch
         fprintf('Warning: unable to encode %s.avi\n', filename);
 end
 
-
+keyboard;
 
 % cd(oldpath);
 

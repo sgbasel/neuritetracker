@@ -1,4 +1,4 @@
-function neuritetracker_cmd(NucChanStr, BodyChanStr, output, parameters) %SeqIndexStr, Sample, magnification)
+function Sequence = neuritetracker_cmd(NucChanVar, BodyChanVar, output, parameters) %SeqIndexStr, Sample, magnification)
 %Neuritetracker is software for high throughput detection, tracking, and 
 %segmentation of neuroblasts and neurites as they migrate in live cell 
 %imaging.
@@ -6,19 +6,23 @@ function neuritetracker_cmd(NucChanStr, BodyChanStr, output, parameters) %SeqInd
 %USAGE   Sequence =  neuritetracker_cmd(NucChanStr, BodyChanStr, InputFolder, parameters)
 %
 %
-%INPUT   NucChanStr  a path to a folder containing the nucleus-stained 
+%INPUT   NucChanVar  a path to a folder containing the nucleus-stained 
 %                    images or a path with a filter (eg. "/my/images/*RFP*.tif")
+%                    or a cell containing a list of filenames
 %
-%        BodyChanStr a path to a folder containing the cell body-stained 
+%        BodyChanVar a path to a folder containing the cell body-stained 
 %                    images or a path with a filter (eg. "/my/images/*GFP*.tif")
+%                    or a cell containing a list of filenames
 %
-%        DestStr     a path to a folder where corrected images and processed
-%                    data will be stored.
+%        output      a data structure containing instructions for what type
+%                    of outputs neuritetracker should produce. If not
+%                    specified, values from settings.ini are used.
 %
-%        parameters  TODO
+%        parameters  data structure specifying various parameter values
+%                    used by neuritetracker. If left empty [], values from
+%                    settings.ini are used.
 %
-%
-%OUTPUT  Sequence    TODO
+%OUTPUT  Sequence    A data structure
 %
 %
 %
@@ -48,6 +52,7 @@ function neuritetracker_cmd(NucChanStr, BodyChanStr, output, parameters) %SeqInd
 %SOFTWARE.
 
 
+
 % add necessary paths
 if (~isdeployed)
     p = mfilename('fullpath');
@@ -66,31 +71,19 @@ if (~isdeployed)
 end
 
 
-% read parameters from the configuration file
-S = ini2struct([p '/settings.ini']);
-output = S.output;
-parameters = S.defaultparameters; clear S;
-output.measurements = regexp(output.measurements, ',', 'split');
+% verify that parameters are set to valid values, if not provided load defaults
+[parameters, output] = trkValidateInput(p, parameters, output);
 
-% verify that parameters are set to valid values, otherwise set to default
-% TODO
-parameters.UniqueID                 = 'TestSeq';
-parameters.SeqIdxStr                = '001';
-% parameters.Magnification
-% parameters.BitDepth
-% parameters.ExperimentID
-% parameters.PlateWellID
-
-output.destFolder                   = '/home/ksmith/temp/neuritetracker5/';
-if ~exist(output.destFolder, 'dir'); mkdir(output.destFolder); end;
+fprintf('******************** Neuritetracker v0.1 ********************\n');
+fprintf('   results stored in %s\n', output.destFolder);
 
 % run vl_setup to set paths for VLFEAT library
 run([p '/vlfeat-0.9.18/toolbox/vl_setup']);
 
 
 % get a list of image files for the nucleus and cell body channels
-parameters.sourceFilesNuc = trkGetFileList(NucChanStr);
-parameters.sourceFilesBod = trkGetFileList(BodyChanStr);
+parameters.sourceFilesNuc = trkGetFileList(NucChanVar);
+parameters.sourceFilesBod = trkGetFileList(BodyChanVar);
 if numel(parameters.sourceFilesNuc) ~= numel(parameters.sourceFilesBod); error('NEURITETRACKER:trkGetFileList', 'The number of images is not the same in both channels'); end;
 
 

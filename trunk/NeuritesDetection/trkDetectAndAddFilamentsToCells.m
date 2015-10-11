@@ -77,8 +77,8 @@ sz = size(ImagesBody{1});
 
 fprintf('    * finding candidate endpoints and backtracing');
 %%
-parfor dd = 1:length(Cells)
-% for dd = 1:length(Cells)
+% parfor dd = 1:length(Cells)
+for dd = 1:length(Cells)
     if Cells(dd).ID > 0
         t = Cells(dd).Time;
         RR = (U{t} < -log(GEODESIC_DISTANCE_NEURITE_THRESH)) & (U{t} > 0) & (Regions{t} == Cells(dd).ID);%#ok

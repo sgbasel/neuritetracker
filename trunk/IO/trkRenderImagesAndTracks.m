@@ -5,7 +5,8 @@ mv = cell(size(Green));
 
 B = zeros(size(Green{1},1), size(Green{1},2));
 TMAX = length(Green);
-parfor t = 1:TMAX
+for t = 1:TMAX
+% parfor t = 1:TMAX
     %I = mv{t};
     I = double(Green{t});
     I = 1- mat2gray(I);

@@ -6,7 +6,8 @@ pad = 3*opt.FrangiScaleRange(2);
 Tubularity = cell(size(Green));
 J          = cell(size(Green));
 
-parfor t = 1:TMAX
+for t = 1:TMAX
+% parfor t = 1:TMAX
     J{t}          = mat2gray(Green{t});
     Tubularity{t} = FrangiFilter2D(J{t}, opt);
     Mask = ones(size(Tubularity{t}));
