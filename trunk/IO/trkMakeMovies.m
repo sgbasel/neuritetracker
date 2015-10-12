@@ -3,7 +3,7 @@ function trkMakeMovies(ImagesNuc, ImagesBody, Cells, CellsList, tracks, Sequence
 % make movie: neuron channel
 if output.movieNeuronChannel
     try
-        fprintf('...rendering neuron channel movie         '); tic;
+        fprintf('...rendering neuron channel movie       '); tic;
         mv_neuron_channel = trkConvertTo8bit(ImagesBody,1);
         FolderMovie = sprintf('%s/movie_neuron_channel/', output.destFolder);
         filestr = sprintf('%s_neuron_channel', parameters.UniqueID);
@@ -16,7 +16,7 @@ end
 % make movie: nucleus channel
 if output.movieNucleusChannel
     try
-        fprintf('...rendering nucleus channel movie        '); tic;
+        fprintf('...rendering nucleus channel movie      '); tic;
         mv_nucleus_channel = trkConvertTo8bit(ImagesNuc,1);
         FolderMovie = sprintf('%s/movie_nucleus_channel/', output.destFolder);
         filestr = sprintf('%s_nucleus_channel', parameters.UniqueID);
@@ -34,7 +34,7 @@ if output.movieNucleusDetection
         mv_detect_label = trkRenderFancy2(ImagesNuc, Cells, CellsList, tracks, cols3, 7);
         FolderMovie = sprintf('%s/movie_nucleus_detections/', output.destFolder);
         filestr = sprintf('%s_nucleus_detections', parameters.UniqueID);
-        trkMovie2(mv_detect_label, output.destFolder, output.destFolder, FolderMovie, filestr, output.writeFramesToFile);
+        trkMovie2(mv_detect_label, output.destFolder, FolderMovie, filestr, output.writeFramesToFile);
         fprintf('   (elapsed time %1.2f seconds)\n', toc);
     catch
     end

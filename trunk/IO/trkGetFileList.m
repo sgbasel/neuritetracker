@@ -1,6 +1,6 @@
 function fileList = trkGetFileList(fileVar)
 
-
+% check if we are given a cell list of files, or a directory + filter
 switch class(fileVar)
     
     % if we are given string (directory + filter), look in the directory for image files
