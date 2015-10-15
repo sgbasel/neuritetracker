@@ -55,6 +55,7 @@ The code has been organised into folders according to the various functions of t
  * _vlfeat-0.9.18_ - 3rd party code for MSER calculation from the vlfeat library (version 0.9.18)
 
 The ```neuritetracker/trunk/``` folder also contains several files, described below.
+ * ```neuritetracker_setup.m``` - a setup script. Run it once to compile necessary files.
  * ```neuritetracker_gui.m``` - a graphical user interface used to run neuritetracker
  * ```neuritetracker_cmd.m``` - the main command-line function to run neuritetracker
  * ```settings.ini```       - contains default parameters and configurations for neuritetracker
