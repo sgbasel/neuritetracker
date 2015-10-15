@@ -18,6 +18,8 @@ To install neuritetracker on your machine follow these steps:
 6. Select the output options you prefer (**5** in the diagram).
 7. Press the *Run Neuritetracker* button.
 
+![GUI interface](https://github.com/sgbasel/neuritetracker/blob/master/trunk/Documentation/Images/interface.png "GUI interface")
+
 ## Summary of the method
 Details of the method are described in the article
 
