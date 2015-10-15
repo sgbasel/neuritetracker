@@ -1,6 +1,13 @@
 # Mac OS X Finder
 .DS_Store
 
+# MEX files
+*.mexglx
+*.mexmac
+*.mexmaci
+*.mexmaci64
+*.mexa64
+*.mex
 
 # Python
 *.pyc
@@ -8,10 +15,19 @@
 # Other generated files and directories
 VERSION
 docsrc/version.html
-
+bin
 results
 doc
-
+build
+toolbox/mexw32
+toolbox/mexmaci
+toolbox/mexmaci64
+toolbox/mexmac
+toolbox/mexglx
+toolbox/mexa64
+toolbox/mexw64
+toolbox/mex
+toolbox/noprefix
 
 # Xcode
 vlfeat.xcodeproj/*.mode1

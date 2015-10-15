@@ -52,5 +52,4 @@ if (~isdeployed)
     addpath([p '/vlfeat-0.9.18/toolbox/']);
 end
 
-vl_setup;
 compile_mex;
