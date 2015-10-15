@@ -53,7 +53,7 @@ function neuritetracker_gui_OpeningFcn(hObject, eventdata, handles, varargin)
 % varargin   command line arguments to neuritetracker_gui (see VARARGIN)
 
 % Choose default command line output for neuritetracker_gui
-handles.output = hObject;
+handles.out = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
@@ -573,7 +573,7 @@ set(handles.pushbutton4, 'Enable', 'off');
 
 neuritetracker_cmd(NucChanVar, BodyChanVar, parameters, output);
 
-
+% close(handles.figure1);
 set(handles.checkbox1, 'Enable', 'on');
 set(handles.checkbox2, 'Enable', 'on');
 set(handles.checkbox3, 'Enable', 'on');

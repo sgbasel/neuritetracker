@@ -38,7 +38,10 @@ mv = cell(size(Images));
 B = zeros(size(Images{1},1), size(Images{1},2));
 TMAX = length(Images);
 for t = 1:TMAX
-    
+    if ~isequal(gcf, f)
+        figure(f);
+        set(f, 'Visible', 'off');
+    end
     if mod(t,10) == 0
         fprintf('|');
     end
