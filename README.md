@@ -10,11 +10,13 @@ To install neuritetracker on your machine follow these steps:
 3. Open Matlab in the ```neuritetracker/trunk/``` folder and run the setup utility from the matlab command prompt ```neuritetracker_setup```. This wil set-up the **vlfeat library** and compile the **Geodesics** functions.
 
 ## Running the code
-Open Matlab and
-
-1. trkTracking : to be run for one single sequence
-2. processPlate.m
-3. processListOfPlates.m
+1. Open Matlab and run the ```neuritetracker_gui``` function located in the ```neuritetracker/trunk/``` folder. This will open the GUI interface for neuritetracker.
+2. Select a folder containing your source images for the nucleus channel (*1* in the diagram).
+3. Select a folder containing your source images for the cell body channel (*2* in the diagram).
+4. Select a destination folder where you would like the output to be saved (*3* in the diagram).
+5. Provide a *UniqueID* string which will uniquely identify the data (*4* in the diagram).
+6. Select the output options you prefer (*5* in the diagram).
+7. Press the *Run Neuritetracker* button.
 
 ## Summary of the method
 Details of the method are described in the article
