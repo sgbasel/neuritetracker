@@ -92,8 +92,8 @@ void InitializeArrays()
     }
     for( int s=0; s<number_of_points; s++ )
     {
-		x = (int) round(POINTS[2*s]);
-		y = (int) round(POINTS[1+2*s]);
+		x = (int) floor(POINTS[2*s]);
+		y = (int) floor(POINTS[1+2*s]);
         END_POINTS[s] = x + y*Nx;
     }
 };
