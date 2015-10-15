@@ -7,7 +7,7 @@ To install neuritetracker on your machine follow these steps:
 
 1. Obtain a licensed copy of [Matlab](http://www.mathworks.com/products/matlab/) (or download a [trial version](https://www.mathworks.com/programs/nrd/matlab-trial-request.html?ref=ggl&s_eid=ppc_2537843722&q=matlab%20trial)).
 2. Clone the **neuritetracker** repository using the following command line ```git clone git@github.com:sgbasel/neuritetracker.git``` or download a [zip file](https://github.com/sgbasel/neuritetracker/archive/master.zip) of the repository. Unzip the archive file if you downloaded a .zip file.
-3. Open Matlab in the ```neuritetracker/trunk/``` folder and run the setup utility from the matlab command prompt ```neuritetracker_setup```. This wil set-up the **vlfeat library** and compile the **Geodesics** functions.
+3. Open Matlab in the ```neuritetracker/trunk/``` folder and run the setup utility from the matlab command prompt ```neuritetracker_setup```. This will set up the **Vlfeat** library and compile the **Geodesics** functions.
 
 ## Running the code
 1. Open Matlab and run the ```neuritetracker_gui``` function located in the ```neuritetracker/trunk/``` folder. This will open the GUI interface for neuritetracker.
@@ -16,7 +16,7 @@ To install neuritetracker on your machine follow these steps:
 4. Select a destination folder where you would like the output to be saved (**3** in the diagram).
 5. Provide a *UniqueID* string which will uniquely identify the data (**4** in the diagram).
 6. Select the output options you prefer (**5** in the diagram).
-7. Press the *Run Neuritetracker* button.
+7. Press the *Run Neuritetracker* button (**6** in the diagram).
 
 ![GUI interface](https://github.com/sgbasel/neuritetracker/blob/master/trunk/Documentation/Images/interface.png "GUI interface")
 
