@@ -49,6 +49,7 @@ if (~isdeployed)
     addpath([p '/NeuritesDetection/']);
     addpath([p '/NeuritesTracking/']);
     addpath([p '/vlfeat-0.9.18/']);
+    addpath([p '/vlfeat-0.9.18/toolbox/']);
 end
 
 vl_setup;
