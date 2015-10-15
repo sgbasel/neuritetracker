@@ -37,7 +37,7 @@ function neuritetracker_setup()
 % add necessary paths
 if (~isdeployed)
     p = mfilename('fullpath');
-    p = p(1:end-19);
+    p = p(1:end-21);
     addpath([p '/CellsDetection/']);
     addpath([p '/Common/']);
     addpath([p '/FeaturesExtraction/']);
