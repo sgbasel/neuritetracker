@@ -64,7 +64,7 @@ The ```neuritetracker/trunk/``` folder also contains several files, described be
  * ```neuritetracker_gui.fig``` - matlab gui figure file
 
 ## Dependencies
-Neuritetracker makes use of the following 3rd party software, which is included in the ```neuritetracker``` repository. 
+Neuritetracker makes use of the following 3rd party software. These software packages are included in the ```neuritetracker``` repository. 
  
 1. The [vlfeat library](http://www.vlfeat.org/download.html) available at http://www.vlfeat.org/download/vlfeat-0.9.20-bin.tar.gz
 2. The [Graph Algorithms in Matlab Code (gaimc)](https://github.com/dgleich/gaimc) available on github at https://github.com/dgleich/gaimc
