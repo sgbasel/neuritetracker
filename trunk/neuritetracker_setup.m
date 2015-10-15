@@ -36,20 +36,18 @@ function neuritetracker_setup()
 
 % add necessary paths
 if (~isdeployed)
-    p = mfilename('fullpath');
-    p = p(1:end-21);
-    addpath([p '/CellsDetection/']);
-    addpath([p '/Common/']);
-    addpath([p '/FeaturesExtraction/']);
-    addpath([p '/frangi_filter_version2a/']);
-    addpath([p '/gaimc/']);
-    addpath([p '/Geodesics/']);
-    addpath([p '/GreedyTracking/']);
-    addpath([p '/IO/']);
-    addpath([p '/NeuritesDetection/']);
-    addpath([p '/NeuritesTracking/']);
-    addpath([p '/vlfeat-0.9.18/']);
-    addpath([p '/vlfeat-0.9.18/toolbox/']);
+    filenm = mfilename('fullpath');
+    p = fileparts(filenm);
+    addpath([p filesep 'CellsDetection' filesep]);
+    addpath([p filesep 'Common' filesep]);
+    addpath([p filesep 'FeaturesExtraction' filesep]);
+    addpath([p filesep 'frangi_filter_version2a' filesep]);
+    addpath([p filesep 'gaimc' filesep]);
+    addpath([p filesep 'Geodesics' filesep]);
+    addpath([p filesep 'GreedyTracking' filesep]);
+    addpath([p filesep 'IO' filesep]);
+    addpath([p filesep 'NeuritesDetection' filesep]);
+    addpath([p filesep 'NeuritesTracking' filesep]);
+    addpath([p filesep 'vlfeat-0.9.18' filesep]);
 end
-
 compile_mex;
