@@ -7,7 +7,7 @@ switch class(fileVar)
     case 'char'
         % break source into a path, filter, and extension
         [pth, filter, ext] = fileparts(fileVar);
-        pth = [pth '/'];
+        pth = [pth filesep];
         source_folder = pth;
         
         % list of filetypes imread can open
@@ -17,7 +17,7 @@ switch class(fileVar)
         % check if a file filter is provided, if so use it to generate a list
         % of source filenames
         if ~isempty(filter)
-            d = dir([source_folder filter ext]);
+            d = dir([source_folder filter]);
             fileList = cell(numel(d),1);
             for i = 1:numel(d)
                 fileList{i} = [source_folder d(i).name];
@@ -50,7 +50,7 @@ switch class(fileVar)
         end
 end
 
-
+% keyboard;
 % check if we have found any valid files in the folder
 if numel(fileList) == 0
     error('NEURITETRACKER:trkGetFileList', 'No files found for string: %s', fileVar);
