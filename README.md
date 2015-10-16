@@ -22,6 +22,7 @@ To install neuritetracker on your machine follow these steps:
 
 ## Running Neuritetracker on a batch of sequences
 The GUI interface does not support batch processing of sequences. To run on a batch of sequences, it is necessary to prepare a batch script and run it from the command prompt. Use the following steps:
+
 1. blah
 2. blah
 3. blah
@@ -30,7 +31,7 @@ The GUI interface does not support batch processing of sequences. To run on a ba
 If you encounter an error or have trouble running **neuritetracker** refer to the following troubleshooting steps
 
 * Neuritetracker comes with compiled libraries for Windows, Mac OS and Linux. In some cases it might be necessary to compile them on your computer. Open Matlab in the ```neuritetracker/trunk/``` folder and run the setup utility from the matlab command prompt ```neuritetracker_setup```. This will set up the **Vlfeat** library and compile the **Geodesics** functions.
-* In order to compile MEX files for Matlab, you need to install a compiler on your machine and configure Matlab to use it. To see if Matlab recognizes a compiler on your computer, type ```mex -setup``` at the prompt.
+* In order to compile MEX files for Matlab, you need have a compiler installed on your machine and configure Matlab to use it. To see if Matlab recognizes an installed compiler on your computer, type ```mex -setup``` at the prompt.
 * To install a compiler for Windows, refer to the [Mathworks website](https://se.mathworks.com/support/compilers/R2015b/index.html?refresh=true&s_cid=pi_scl_5_R2015b_win64) for a list of supported compilers for your version of Matlab. [Microsoft Windows SDK](http://www.microsoft.com/en-us/download/confirmation.aspx?id=8279) is a freely available option which works for Windows 7. You can use [these instructions from Mathworks](http://www.mathworks.com/matlabcentral/answers/101105-how-do-i-install-microsoft-windows-sdk-7-1) to install it. You might also need to install Microsoft Visual Studio C++ 2010 SP1. If you have trouble installing, try the fix suggested [here](http://www.mathworks.com/matlabcentral/answers/95039-why-does-the-sdk-7-1-installation-fail-with-an-installation-failed-message-on-my-windows-system).
 
 ## Summary of the method
