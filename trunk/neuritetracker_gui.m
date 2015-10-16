@@ -290,7 +290,15 @@ if iscell(filename)
 else
     handles.NucChanVar{1} = fullfile(pathname, filename);
 end
-set(handles.edit1, 'String', strjoin(handles.NucChanVar, ', '));
+if iscell(handles.NucChanVar)
+    vStrCat = handles.NucChanVar{1};
+    for i = 1:numel(handles.NucChanVar)
+        vStrCat = [vStrCat ',' handles.NucChanVar{i}]; %#ok<AGROW>
+    end
+else
+    vStrCat = handles.NucChanVar;
+end
+set(handles.edit1, 'String', vStrCat);
 guidata(hObject, handles);
 
 
@@ -342,7 +350,15 @@ if iscell(filename)
 else
     handles.BodyChanVar{1} = fullfile(pathname, filename);
 end
-set(handles.edit2, 'String', strjoin(handles.BodyChanVar, ', '));
+if iscell(handles.BodyChanVar)
+    vStrCat = handles.BodyChanVar{1};
+    for i = 1:numel(handles.BodyChanVar)
+        vStrCat = [vStrCat ',' handles.BodyChanVar{i}]; %#ok<AGROW>
+    end
+else
+    vStrCat = handles.BodyChanVar;
+end
+set(handles.edit2, 'String', vStrCat);
 guidata(hObject, handles);
 
 function edit3_Callback(hObject, eventdata, handles)
