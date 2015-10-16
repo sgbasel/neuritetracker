@@ -20,12 +20,12 @@ To install neuritetracker on your machine follow these steps:
 
 ![GUI interface](https://github.com/sgbasel/neuritetracker/blob/master/trunk/Documentation/Images/interface.png "GUI interface")
 
-## Running Neuritetracker on a batch of sequences
+## Running neuritetracker on a batch of sequences
 The GUI interface does not support batch processing of sequences. To run on a batch of sequences, it is necessary to prepare a batch script and run it from the command prompt. Use the following steps:
 
-1. blah
-2. blah
-3. blah
+1. Open Matlab and navigate to the ```neuritetracker/trunk/``` folder.
+2. Modify the script ```example_batch_script.m``` to fit your needs. Change the ```sourceFolders``` variable to point to the root location of your data. Modify the ```SourceNuc``` and ```SourceBody``` strings to reflect your data. Modify the ```parameters.UniqueID``` variable to uniquely identify each sequence.
+3. Save your changes and run the modified ```example_batch_script.m``` at the command line.
 
 ## Troubleshooting
 If you encounter an error or have trouble running **neuritetracker** refer to the following troubleshooting steps
