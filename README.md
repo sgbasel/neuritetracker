@@ -9,7 +9,7 @@ To install neuritetracker on your machine follow these steps:
 2. Clone the **neuritetracker** repository using the following command line ```git clone git@github.com:sgbasel/neuritetracker.git``` or download a [zip file](https://github.com/sgbasel/neuritetracker/archive/master.zip) of the repository. Unzip the archive file if you downloaded a .zip file.
 
 
-## Running the Neuritetracker GUI on a single sequence
+## Running neuritetracker GUI on a single sequence
 1. Open Matlab and run the ```neuritetracker_gui``` function located in the ```neuritetracker/trunk/``` folder. This will open the GUI interface for neuritetracker.
 2. Select a folder containing your source images for the nucleus channel (**1** in the diagram).
 3. Select a folder containing your source images for the cell body channel (**2** in the diagram).
@@ -20,7 +20,8 @@ To install neuritetracker on your machine follow these steps:
 
 ![GUI interface](https://github.com/sgbasel/neuritetracker/blob/master/trunk/Documentation/Images/interface.png "GUI interface")
 
-## Using a script to run Neuritetracker on a batch of sequences
+## Running Neuritetracker on a batch of sequences
+The GUI interface does not support batch processing of sequences. To run on a batch of sequences, it is necessary to prepare a batch script and run it from the command prompt. Use the following steps:
 1. blah
 2. blah
 3. blah
