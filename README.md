@@ -5,9 +5,9 @@ Neuritetracker is software for high throughput detection, tracking, and segmenta
 ## Installation
 To install neuritetracker on your machine follow these steps:
 
-1. Obtain a licensed copy of [Matlab](http://www.mathworks.com/products/matlab/) with a C/C++ compiler (or download a [trial version](https://www.mathworks.com/programs/nrd/matlab-trial-request.html?ref=ggl&s_eid=ppc_2537843722&q=matlab%20trial)). Refer to the [Mathworks website](https://se.mathworks.com/support/compilers/R2015b/index.html?refresh=true&s_cid=pi_scl_5_R2015b_win64) for a list of supported compilers for your version of Matlab. [Microsoft Windows SDK](http://www.microsoft.com/en-us/download/confirmation.aspx?id=8279) is a freely available option which works for Windows 7. You can use [these instructions from Mathworks](http://www.mathworks.com/matlabcentral/answers/101105-how-do-i-install-microsoft-windows-sdk-7-1) to install it. You might also need to install Microsoft Visual Studio C++ 2010 SP1. If you have trouble installing, try the fix suggested [here](http://www.mathworks.com/matlabcentral/answers/95039-why-does-the-sdk-7-1-installation-fail-with-an-installation-failed-message-on-my-windows-system). 
+1. Obtain a licensed copy of [Matlab](http://www.mathworks.com/products/matlab/) with a C/C++ compiler (or download a [trial version](https://www.mathworks.com/programs/nrd/matlab-trial-request.html?ref=ggl&s_eid=ppc_2537843722&q=matlab%20trial)). 
 2. Clone the **neuritetracker** repository using the following command line ```git clone git@github.com:sgbasel/neuritetracker.git``` or download a [zip file](https://github.com/sgbasel/neuritetracker/archive/master.zip) of the repository. Unzip the archive file if you downloaded a .zip file.
-3. Open Matlab in the ```neuritetracker/trunk/``` folder and run the setup utility from the matlab command prompt ```neuritetracker_setup```. This will set up the **Vlfeat** library and compile the **Geodesics** functions.
+
 
 ## Running the Neuritetracker GUI on a single sequence
 1. Open Matlab and run the ```neuritetracker_gui``` function located in the ```neuritetracker/trunk/``` folder. This will open the GUI interface for neuritetracker.
@@ -24,6 +24,13 @@ To install neuritetracker on your machine follow these steps:
 1. blah
 2. blah
 3. blah
+
+## Troubleshooting
+If you encounter an error or have trouble running **neuritetracker** refer to the following troubleshooting steps
+
+* Neuritetracker comes with compiled libraries for Windows, Mac OS and Linux. In some cases it might be necessary to compile them on your computer. Open Matlab in the ```neuritetracker/trunk/``` folder and run the setup utility from the matlab command prompt ```neuritetracker_setup```. This will set up the **Vlfeat** library and compile the **Geodesics** functions.
+* In order to compile MEX files for Matlab, you need to install a compiler on your machine and configure Matlab to use it. To see if Matlab recognizes a compiler on your computer, type ```mex -setup``` at the prompt.
+* To install a compiler for Windows, refer to the [Mathworks website](https://se.mathworks.com/support/compilers/R2015b/index.html?refresh=true&s_cid=pi_scl_5_R2015b_win64) for a list of supported compilers for your version of Matlab. [Microsoft Windows SDK](http://www.microsoft.com/en-us/download/confirmation.aspx?id=8279) is a freely available option which works for Windows 7. You can use [these instructions from Mathworks](http://www.mathworks.com/matlabcentral/answers/101105-how-do-i-install-microsoft-windows-sdk-7-1) to install it. You might also need to install Microsoft Visual Studio C++ 2010 SP1. If you have trouble installing, try the fix suggested [here](http://www.mathworks.com/matlabcentral/answers/95039-why-does-the-sdk-7-1-installation-fail-with-an-installation-failed-message-on-my-windows-system).
 
 ## Summary of the method
 Details of the method are described in the article
