@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Neuritetracker by sgbasel</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Neuritetracker</h1>
+          <h2>High throughput detection &amp; tracking of neurons in live cell imaging</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/sgbasel/neuritetracker/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/sgbasel/neuritetracker/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/sgbasel/neuritetracker" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <p>Neuritetracker is software for high throughput detection, tracking, and segmentation of neurons or neuronal-like cells in live cell imaging. It analyzes image sequences, and stores results as movies and CSV files. It can be run with a GUI interface for single sequences, or using a Matlab script for batch processing.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>To install neuritetracker on your machine follow these steps:</p>
+
+<ol>
+<li>Obtain a licensed copy of <a href="http://www.mathworks.com/products/matlab/">Matlab</a> with a C/C++ compiler (or download a <a href="https://www.mathworks.com/programs/nrd/matlab-trial-request.html?ref=ggl&amp;s_eid=ppc_2537843722&amp;q=matlab%20trial">trial version</a>). </li>
+<li>Clone the <strong>neuritetracker</strong> repository using the following command line <code>git clone git@github.com:sgbasel/neuritetracker.git</code> or download a <a href="https://github.com/sgbasel/neuritetracker/archive/master.zip">zip file</a> of the repository. Unzip the archive file if you downloaded a .zip file.</li>
+</ol>
+
+<h2>
+<a id="running-neuritetracker-gui-on-a-single-sequence" class="anchor" href="#running-neuritetracker-gui-on-a-single-sequence" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running neuritetracker GUI on a single sequence</h2>
+
+<ol>
+<li>Open Matlab and run the <code>neuritetracker_gui</code> function located in the <code>neuritetracker/trunk/</code> folder. This will open the GUI interface for neuritetracker.</li>
+<li>Select a folder containing your source images for the nucleus channel (<strong>1</strong> in the diagram).</li>
+<li>Select a folder containing your source images for the cell body channel (<strong>2</strong> in the diagram).</li>
+<li>Select a destination folder where you would like the output to be saved (<strong>3</strong> in the diagram).</li>
+<li>Provide a <em>UniqueID</em> string which will uniquely identify the data (<strong>4</strong> in the diagram).</li>
+<li>Select the output options you prefer (<strong>5</strong> in the diagram).</li>
+<li>Press the <em>Run Neuritetracker</em> button (<strong>6</strong> in the diagram).</li>
+</ol>
+
+<p><img src="https://github.com/sgbasel/neuritetracker/blob/master/trunk/Documentation/Images/interface.png" alt="GUI interface" title="GUI interface"></p>
+
+<h2>
+<a id="running-neuritetracker-on-a-batch-of-sequences" class="anchor" href="#running-neuritetracker-on-a-batch-of-sequences" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running neuritetracker on a batch of sequences</h2>
+
+<p>The GUI interface does not support batch processing of sequences. To run on a batch of sequences, it is necessary to prepare a batch script and run it from the command prompt. Use the following steps:</p>
+
+<ol>
+<li>Open Matlab and navigate to the <code>neuritetracker/trunk/</code> folder.</li>
+<li>Modify output settings in <code>settings.ini</code> to fit your preferences. </li>
+<li>Modify the script <code>example_batch_script.m</code> to fit your needs. Change the <code>sourceFolders</code> variable to point to the root location of your data. Modify the <code>SourceNuc</code> and <code>SourceBody</code> strings to reflect your data. Modify the <code>parameters.UniqueID</code> variable to uniquely identify each sequence.</li>
+<li>Save your changes and run the modified <code>example_batch_script.m</code> at the command line.</li>
+</ol>
+
+<h2>
+<a id="troubleshooting" class="anchor" href="#troubleshooting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Troubleshooting</h2>
+
+<p>If you encounter an error or have trouble running <strong>neuritetracker</strong> refer to the following troubleshooting steps</p>
+
+<ul>
+<li>Neuritetracker comes with compiled libraries for Windows, Mac OS and Linux. In some cases it might be necessary to compile them on your computer. Open Matlab in the <code>neuritetracker/trunk/</code> folder and run the setup utility from the matlab command prompt <code>neuritetracker_setup</code>. This will set up the <strong>Vlfeat</strong> library and compile the <strong>Geodesics</strong> functions.</li>
+<li>In order to compile MEX files for Matlab, you need have a compiler installed on your machine and configure Matlab to use it. To see if Matlab recognizes an installed compiler on your computer, type <code>mex -setup</code> at the prompt.</li>
+<li>To install a compiler for Windows, refer to the <a href="https://se.mathworks.com/support/compilers/R2015b/index.html?refresh=true&amp;s_cid=pi_scl_5_R2015b_win64">Mathworks website</a> for a list of supported compilers for your version of Matlab. <a href="http://www.microsoft.com/en-us/download/confirmation.aspx?id=8279">Microsoft Windows SDK</a> is a freely available option which works for Windows 7. You can use <a href="http://www.mathworks.com/matlabcentral/answers/101105-how-do-i-install-microsoft-windows-sdk-7-1">these instructions from Mathworks</a> to install it. You might also need to install Microsoft Visual Studio C++ 2010 SP1. If you have trouble installing, try the fix suggested <a href="http://www.mathworks.com/matlabcentral/answers/95039-why-does-the-sdk-7-1-installation-fail-with-an-installation-failed-message-on-my-windows-system">here</a>.</li>
+</ul>
+
+<h2>
+<a id="summary-of-the-method" class="anchor" href="#summary-of-the-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary of the method</h2>
+
+<p>Details of the method are described in the article</p>
+
+<ol>
+<li>L. Fusco, R. Lefort, K. Smith, F. Benmansour, G. Gonzalez, C. Barillari, B. Rinn, F. Fleuret, P. Fua, O. Pertz, <a href="https://www.google.com">Computer vision profiling of neurite outgrowth dynamics reveals spatio-temporal modularity of Rho GTPase signaling</a>, Journal of Cell Biology, <em>under review</em>
+</li>
+</ol>
+
+<p>The image processing is divided into 9 steps, summarized in the figure. A brief description of each step is provided below.</p>
+
+<p><img src="https://github.com/sgbasel/neuritetracker/blob/master/trunk/Documentation/Images/figure.png" alt="Image processing pipeline" title="Image processing pipeline"></p>
+
+<ol>
+<li>Segmentation of the nucleus using Maximally Stable Extremal Regions (MSER).</li>
+<li>Soma region growing using a fast marching method on geodesic intensity distance to the nucleus.</li>
+<li>Cell tracking using a greedy graph-based optimization.</li>
+<li>Cell filtering and identification of robust tracks.</li>
+<li>Apply Hessian-based filter to get high responses to tubular neurite-like structures</li>
+<li>Use this to model the likelihood each pixel belongs to neuron (sigmoid fitting on geodesic distance from soma)</li>
+<li>Set a likelihood threshold to obtain cell bodies</li>
+<li>Identify candidate neurite terminals (extreme points), use backtracing &amp; minimal spanning trees to reconstruct the neurites</li>
+<li>Store the reconstructed neurite model in a HDS graph representation</li>
+</ol>
+
+<h2>
+<a id="contents-of-the-repository" class="anchor" href="#contents-of-the-repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contents of the repository</h2>
+
+<p>The code has been organised into folders according to the various functions of the code. They are organized in the <code>neuritetracker</code> folder according to the list below followed by a short description.</p>
+
+<ul>
+<li>
+<em>trunk</em>
+
+<ul>
+<li>
+<em>CellsDetection</em> - code to detect neuron cells in static images</li>
+<li>
+<em>Common</em> - code shared in several routines</li>
+<li>
+<em>FeaturesExtraction</em> - code to extract &amp; organize features describing the cells</li>
+<li>
+<em>frangi-filter-version2a</em> - code for the Hessian-based filter to detect neurite-like structures</li>
+<li>
+<em>gaimc</em> - 3rd party software with useful graph manipulation functions</li>
+<li>
+<em>Geodesics</em> - code to efficiently compute geodesic distances</li>
+<li>
+<em>GreedyTracking</em> - code to perform tracking on a graph formed from object detections</li>
+<li>
+<em>IO</em> - code for file input/output</li>
+<li>
+<em>NeuritesDetection</em> - code for detecting neurites</li>
+<li>
+<em>NeuritesTracking</em> - code for tracking the neurites</li>
+<li>
+<em>TestData</em> - sample image sequences to test the algorithm</li>
+<li>
+<em>vlfeat-0.9.18</em> - 3rd party code for MSER calculation from the vlfeat library (version 0.9.18)</li>
+</ul>
+</li>
+</ul>
+
+<p>The <code>neuritetracker/trunk/</code> folder also contains several files, described below.</p>
+
+<ul>
+<li>
+<code>neuritetracker_setup.m</code> - a setup script. Run it once to compile necessary files.</li>
+<li>
+<code>neuritetracker_gui.m</code> - a graphical user interface used to run neuritetracker</li>
+<li>
+<code>neuritetracker_cmd.m</code> - the main command-line function to run neuritetracker</li>
+<li>
+<code>settings.ini</code>       - contains default parameters and configurations for neuritetracker</li>
+<li>
+<code>neuritetracker_gui.fig</code> - matlab gui figure file</li>
+</ul>
+
+<h2>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<p>Neuritetracker makes use of the following 3rd party software. These software packages are included in the <code>neuritetracker</code> repository. </p>
+
+<ol>
+<li>The <a href="http://www.vlfeat.org/download.html">vlfeat library</a> available at <a href="http://www.vlfeat.org/download/vlfeat-0.9.20-bin.tar.gz">http://www.vlfeat.org/download/vlfeat-0.9.20-bin.tar.gz</a>
+</li>
+<li>The <a href="https://github.com/dgleich/gaimc">Graph Algorithms in Matlab Code (gaimc)</a> available on github at <a href="https://github.com/dgleich/gaimc">https://github.com/dgleich/gaimc</a>
+</li>
+</ol>
+        </section>
+
+        <footer>
+          Neuritetracker is maintained by <a href="https://github.com/sgbasel">sgbasel</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
