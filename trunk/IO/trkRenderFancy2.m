@@ -229,7 +229,8 @@ for t = 1:TMAX
     drawnow;
 
     
-    set(f, 'Position', [1937 262 696 520]);
+    [img_height img_width] = size(B);
+    set(f, 'Position', [1937 262 img_width img_height]);
 %     F = getframe(gcf);
 %     I = F.cdata;
     I = opengl_cdata(f);
